@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useContext } from 'react'
 import { fakeFetchCrypto, fetchAssets } from '../api'
 import { percentDifference } from '../utils'
 
@@ -34,10 +34,14 @@ export function CryptoContextProvider({children}) {
     };
     preload();
   }, []);
-  
+
   return <CryptoContext.Provider value={{ loading, crypto, assets }}>
     {children}
   </CryptoContext.Provider>
 }
 
 export default CryptoContext;
+
+export function useCrypto() {
+  return useContext(CryptoContext)
+}
