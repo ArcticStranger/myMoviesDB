@@ -1,34 +1,57 @@
-import { Layout, Card, Statistic } from 'antd';
-import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons'
+import { Layout, Card, Statistic, List, Typography, Tag } from 'antd';
+import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
+import { capitalize } from '../../utils'
+import { useContext } from 'react'
+import CryptoContext from '../../context/crypto-context'
 
 const siderStyle = {
   padding: '1rem',
 };
 
+
 export default function AppSider() {
+  const { assets } = useContext(CryptoContext)
+
   return ( 
         <Layout.Sider width="25%" style={siderStyle}>
-                <Card style={{ marginBottom: '1rem' }}>
+        { assets.map(asset => (
+            <Card key={asset.id} style={{ marginBottom: '1rem' }}>
                 <Statistic
-          title="Active"
-          value={11.28}
+          title={capitalize(asset.id)}
+          value={asset.totalAmount}
           precision={2}
-          styles={{ content: { color: '#3f8600' } }}
-          prefix={<ArrowUpOutlined />}
-          suffix="%"
+          styles={{ content: { color: asset.grow ? '#3f8600' : '#cf1322'} }}
+          prefix={asset.grow ? <ArrowUpOutlined /> : <ArrowDownOutlined />}
+          suffix="$"
         />
-               </Card>
+            <List
+            size="small"
+      dataSource={[
+        { title: 'Total Profit', value: asset.totalProfit, withTag: true, },
+        { title: 'Asset Amount', value: asset.amount, isPlain: true },
+        // { title: 'Difference', value: asset.growPercent },
 
-               <Card>
-                <Statistic
-          title="Idle"
-          value={9.3}
-          precision={2}
-          styles={{ content: { color: '#cf1322' } }}
-          prefix={<ArrowDownOutlined />}
-          suffix="%"
-        />
-               </Card>
+      ]}
+      renderItem={(item) => (
+        <List.Item>
+        <span>{item.title}</span>
+        <span>
+        {item.withTag && 
+        <Tag color={asset.grow ? 'green' : 'red'} variant={'solid'}>
+            {asset.growPercent.toFixed(2)}%
+        </Tag>}
+        {item.isPlain && item.value}
+      {!item.isPlain && (
+      <Typography.Text type={asset.grow ? 'success' : 'danger'} style={{paddingLeft: '1rem'}}>
+      {item.value.toFixed(2)}$
+      </Typography.Text>
+        )}
+      </span>
+        </List.Item>
+      )}
+    />
+  </Card>
+        ))}
           </Layout.Sider> 
           );
 }
