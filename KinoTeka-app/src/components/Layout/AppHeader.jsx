@@ -1,28 +1,20 @@
-import { Layout, Menu } from 'antd'
+import { Layout, Input, Switch } from 'antd'
+import { AudioOutlined } from '@ant-design/icons';
 import bruh from '../controller/apiRequest'
-const items1 = ['1', '2', '3'].map(key => ({
-  key,
-  label: `nav ${key}`,
-}));
 
-// const headerStyle = {
-//   textAlign: 'center',
-//   color: '#fff',
-//   height: 90,
-//   paddingInline: 48,
-//   lineHeight: '64px',
-//   backgroundColor: '#4096ff',
-// };
+const { Search } = Input;
+const onChange = checked => {
+  console.log(`switch to ${checked}`);
+};
+const suffix = <AudioOutlined style={{ fontSize: 16, color: '#1677ff' }} />;
+const onSearch = (value, _e, info) => console.log(info?.source, value);
+
 bruh();
 export default function AppHeader() {
   return (   <Layout.Header style={{ display: 'flex', alignItems: 'center' }}>
         <div className="demo-logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-          items={items1}
-          style={{ flex: 1, minWidth: 0 }}
-        />
+           <Search placeholder="input search text" style={{maxWidth: '30vh', marginRight: '3rem'}} onSearch={onSearch} size="large" enterButton />
+<Switch defaultChecked onChange={onChange} style={{marginRight:'1rem'}} />
+<p style={{color: '#fff'}}>Switch for local</p>
       </Layout.Header>);
 }
