@@ -1,5 +1,6 @@
 import { Layout } from 'antd'
 
+
 const footerStyle = {
   textAlign: 'center',
   color: '#fff',
@@ -7,5 +8,7 @@ const footerStyle = {
 };
 
 export default function AppFooter() {
-  return (<Layout.Footer style={footerStyle}>Footer</Layout.Footer>)
+  return (<Layout.Footer style={footerStyle}>
+
+  </Layout.Footer>)
 }

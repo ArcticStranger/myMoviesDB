@@ -1,4 +1,5 @@
 import { Layout, Menu } from 'antd'
+import bruh from '../controller/apiRequest'
 const items1 = ['1', '2', '3'].map(key => ({
   key,
   label: `nav ${key}`,
@@ -12,7 +13,7 @@ const items1 = ['1', '2', '3'].map(key => ({
 //   lineHeight: '64px',
 //   backgroundColor: '#4096ff',
 // };
-
+bruh();
 export default function AppHeader() {
   return (   <Layout.Header style={{ display: 'flex', alignItems: 'center' }}>
         <div className="demo-logo" />

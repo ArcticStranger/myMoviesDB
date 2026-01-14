@@ -1,4 +1,4 @@
-import { Layout, Card, Carousel, Image } from 'antd'
+import { Layout, Card, Carousel, Image, List, Divider } from 'antd'
 
 const contentStyle = {
   textAlign: 'center',
@@ -7,6 +7,14 @@ const contentStyle = {
   color: '#fff',
   backgroundColor: '#0958d9',
 };
+
+const data = [
+  'Racing car sprays burning fuel into crowd.',
+  'Japanese princess to wed commoner.',
+  'Australian walks 100km after outback crash.',
+  'Man charged over missing wedding girl.',
+  'Los Angeles battles huge wildfires.',
+];
 
 export default function AppContent() {
   return (<Layout.Content style={contentStyle}>
@@ -59,6 +67,19 @@ export default function AppContent() {
     src="https://wallpaper.forfun.com/fetch/ef/efc87f4b3149d8342bd5e54e68822512.jpeg?w=1470&r=0.5625&f=webp"
   />
     </div>
+
+        {/* <Divider titlePlacement="start">Large Size</Divider> */}
+
   </Carousel>
+    {/* <Divider titlePlacement="start">Large Size</Divider>
+    <List
+      size="large"
+      header={<div>Header</div>}
+      footer={<div>Footer</div>}
+      bordered
+      dataSource={data}
+      renderItem={(item) => <List.Item>{item}</List.Item>}
+    /> */}
+
   </Layout.Content>)
 }
