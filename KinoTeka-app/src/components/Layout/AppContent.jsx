@@ -1,4 +1,4 @@
-import { Layout, Typography } from 'antd'
+import { Layout, Typography, Spin } from 'antd'
 import { useState, useEffect } from 'react'
 
 const { Text } = Typography;
@@ -10,7 +10,7 @@ const contentStyle = {
   backgroundColor: '#0958d9',
 };
 
-const textStyle ={
+const textStyle = {
   color: '#fff',
   fontFamily: 'Inter',
   fontWeight: 700,
@@ -30,28 +30,32 @@ function getFilmInfo(filmName) {
     return data;
 }
 
-function filmDescription(data) {
-    return (
-        <Layout.Content style={contentStyle}>
-    <Text style={textStyle}>
-      {`
-    "Название фильма": ${data.Title}
-    "Год выпуска": ${data.Year}
-    "Длительность": ${data.Runtime}
-    `.replace(/"/g, '')}
-</Text>
-  </Layout.Content>
-    )
+function getPoster(filmName) {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    fetch(`http://img.omdbapi.com/?i=tt3896198&apikey=ea46ba8f&t=${filmName}`)
+    .then(value => value.json())
+    .then(value => setData(value))
+  }, [filmName])
+
+  return data;
 }
+
 
 function FilmItem({ filmName }) {
   const data = getFilmInfo(filmName);
 
   if (!data) {
-    return <Text style={textStyle}>Loading...</Text>
+    return <Spin />;
   }
 
   return (
+    <div style={{ marginBottom: 24 }}>
+    <img 
+      src={data.Poster}
+      alt={data.Title}
+      style={{ width: 200, marginBottom: 0}}
+    />
     <Text style={textStyle} block>
   Название: {data.Title}
   <br/>
@@ -60,7 +64,17 @@ function FilmItem({ filmName }) {
   Длительность: {data.Runtime}
   <br/>
     </Text>
+    </div>
   );
+}
+
+function PosterItem({filmName}) {
+  const data = getPoster(filmName);
+  if (!data) {
+    return <Spin />;
+  }
+
+  return (data);
 }
 
 export default function AppContent() {
@@ -73,12 +87,15 @@ export default function AppContent() {
   ]
   const data = `The King's Speech`;
   const dataResult = getFilmInfo(storage)
+  const imgResult = getPoster(storage)
 
   return (
     <Layout.Content style={contentStyle}>
         {storage.map((film) => (
           <FilmItem key={film} filmName={film}/>
-        ))}
+        ))
+        }
+
     </Layout.Content>
   )
 }  
