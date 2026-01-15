@@ -10,39 +10,76 @@ const contentStyle = {
   backgroundColor: '#0958d9',
 };
 
-function getFilmInfo(filmName) {
-const [data, setData] = useState(null);
-
-useEffect(() => {
-  fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=ea46ba8f&t=${filmName}`)
-  .then((value) => {
-    return value.json();
-  }).then((value) => {
-    Data(value);
-  })
-});
-return (data);
-} 
-
 const textStyle ={
   color: '#fff',
   fontFamily: 'Inter',
   fontWeight: 700,
   whiteSpace: 'pre-wrap',
-  lineHeight: 1.1,
+  lineHeight: .4,
+}
+
+
+function getFilmInfo(filmName) {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=ea46ba8f&t=${filmName}`)
+      .then(value => value.json())
+      .then(value => setData(value));
+    }, [filmName]);
+
+    return data;
+}
+
+function filmDescription(data) {
+    return (
+        <Layout.Content style={contentStyle}>
+    <Text style={textStyle}>
+      {`
+    "Название фильма": ${data.Title}
+    "Год выпуска": ${data.Year}
+    "Длительность": ${data.Runtime}
+    `.replace(/"/g, '')}
+</Text>
+  </Layout.Content>
+    )
+}
+
+function FilmItem({ filmName }) {
+  const data = getFilmInfo(filmName);
+
+  if (!data) {
+    return <Text style={textStyle}>Loading...</Text>
+  }
+
+  return (
+    <Text style={textStyle} block>
+  Название: {data.Title}
+  <br/>
+  Год выпуска: {data.Year}
+  <br/>
+  Длительность: {data.Runtime}
+  <br/>
+    </Text>
+  );
 }
 
 export default function AppContent() {
+  const storage = [
+    "The King's Speech",
+    "The Hateful Eight",
+    "The Electrical Life of Louis Wain",
+    "Jojo Rabbit",
+    "District 9"
+  ]
   const data = `The King's Speech`;
-  const dataResult = getFilmInfo(data)
+  const dataResult = getFilmInfo(storage)
 
-  return (<Layout.Content style={contentStyle}>
-<Text style={textStyle}>
-{JSON.stringify({
-  "Название фильма": dataResult.Title,
-  "Год выпуска": dataResult.Year,
-  "Длительность": dataResult.Runtime,
-},null, 2).replace(/"/g, '')}
-</Text>
-  </Layout.Content>)
+  return (
+    <Layout.Content style={contentStyle}>
+        {storage.map((film) => (
+          <FilmItem key={film} filmName={film}/>
+        ))}
+    </Layout.Content>
+  )
 }  
+
