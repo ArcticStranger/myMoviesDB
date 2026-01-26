@@ -18,8 +18,7 @@ const textStyle = {
   lineHeight: .4,
 }
 
-
-function getFilmInfo(filmName) {
+function useGetFilmInfo(filmName) {
   const [data, setData] = useState(null);
   useEffect(() => {
     fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=ea46ba8f&t=${filmName}`)
@@ -30,21 +29,8 @@ function getFilmInfo(filmName) {
     return data;
 }
 
-function getPoster(filmName) {
-  const [data, setData] = useState(null);
-  useEffect(() => {
-    fetch(`http://img.omdbapi.com/?i=tt3896198&apikey=ea46ba8f&t=${filmName}`)
-    .then(value => value.json())
-    .then(value => setData(value))
-  }, [filmName])
-
-  return data;
-}
-
-
 function FilmItem({ filmName }) {
   const data = getFilmInfo(filmName);
-
   if (!data) {
     return <Spin />;
   }
@@ -56,7 +42,7 @@ function FilmItem({ filmName }) {
       alt={data.Title}
       style={{ width: 200, marginBottom: 0}}
     />
-    <Text style={textStyle} block>
+    <Text style={textStyle}>
   Название: {data.Title}
   <br/>
   Год выпуска: {data.Year}
@@ -73,7 +59,6 @@ function PosterItem({filmName}) {
   if (!data) {
     return <Spin />;
   }
-
   return (data);
 }
 
@@ -86,8 +71,7 @@ export default function AppContent() {
     "District 9"
   ]
   const data = `The King's Speech`;
-  const dataResult = getFilmInfo(storage)
-  const imgResult = getPoster(storage)
+  const dataResult = useGetFilmInfo(storage)
 
   return (
     <Layout.Content style={contentStyle}>
@@ -95,8 +79,8 @@ export default function AppContent() {
           <FilmItem key={film} filmName={film}/>
         ))
         }
-
     </Layout.Content>
   )
 }  
 
+ 
