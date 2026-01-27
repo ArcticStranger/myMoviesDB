@@ -31,6 +31,18 @@ const filmCard ={
      borderRadius: 20,
 }
 
+const posterStyle = (isHovered) => ({
+        width: 250, 
+        marginBottom: 20,
+        marginTop: 20,
+        transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        transform: isHovered ? "scale(1.05)" : "scale(1)",
+        boxShadow: isHovered
+        ? "0 10px 25px rgba(0,0,0,0.25)"
+        : "none",
+        cursor: "pointer",
+})
+
 const filmsGrid = {
      display: 'grid',
      gridTemplateColumns: 'repeat(5, 1fr)',
@@ -48,8 +60,10 @@ function useGetFilmInfo(filmName) {
     return data;
 }
 
+
 function FilmItem({ filmName }) {
   const data = useGetFilmInfo(filmName);
+  const [isHovered, setIsHovered] = useState(false);
   if (!data) {
     return <Spin />;
   }
@@ -60,15 +74,15 @@ function FilmItem({ filmName }) {
      marginLeft: 24,
      }}>
 
-     <div style={filmCard}>
+     <div 
+     style={filmCard}
+     onMouseEnter={() => setIsHovered(true)}
+     onMouseLeave={() => setIsHovered(false)}
+     >
     <img 
       src={data.Poster}
       alt={data.Title}
-      style={{ 
-        width: 250, 
-        marginBottom: 20,
-        marginTop: 20,
-        }}
+      style={posterStyle(isHovered)}
     />
     <Text style={textStyle}>
   Название: {data.Title}
@@ -100,9 +114,12 @@ export default function AppContent() {
   const data = `The King's Speech`;
   const dataResult = useGetFilmInfo(storage)
 
+
   return (
     <Layout.Content style={contentStyle}>
-        <div style={filmsGrid}>
+        <div style={filmsGrid} 
+        
+        >
         {storage.map((film) => (
           <FilmItem key={film} filmName={film}/>
         ))
