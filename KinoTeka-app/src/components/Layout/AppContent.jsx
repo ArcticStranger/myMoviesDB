@@ -3,19 +3,38 @@ import { useState, useEffect } from 'react'
 
 const { Text } = Typography;
 const contentStyle = {
-  textAlign: 'center',
   minHeight: 'calc(100vh - 90px)',
   lineHeight: '120px',
-  color: '#fff',
-  backgroundColor: '#0958d9',
+  color: 'rgb(37, 37, 51)',
+  backgroundColor: '#ffffff',
 };
 
 const textStyle = {
-  color: '#fff',
+  color: '#342d2d',
   fontFamily: 'Inter',
   fontWeight: 700,
+  fontSize: 20,
   whiteSpace: 'pre-wrap',
-  lineHeight: .4,
+  lineHeight: 1.4,
+  width: 250,
+  textALign: 'left',
+}
+
+const filmCard ={
+     display: 'flex',
+     flexDirection: 'column',
+     alignItems: 'center',
+     gap: '8px',
+     backgroundColor: '#bccd28',
+     width: 300,
+     minHeight: 580,
+     borderRadius: 20,
+}
+
+const filmsGrid = {
+     display: 'grid',
+     gridTemplateColumns: 'repeat(5, 1fr)',
+     gap: '16px',
 }
 
 function useGetFilmInfo(filmName) {
@@ -30,17 +49,26 @@ function useGetFilmInfo(filmName) {
 }
 
 function FilmItem({ filmName }) {
-  const data = getFilmInfo(filmName);
+  const data = useGetFilmInfo(filmName);
   if (!data) {
     return <Spin />;
   }
 
   return (
-    <div style={{ marginBottom: 24 }}>
+    <div style={{
+     marginTop: 24,
+     marginLeft: 24,
+     }}>
+
+     <div style={filmCard}>
     <img 
       src={data.Poster}
       alt={data.Title}
-      style={{ width: 200, marginBottom: 0}}
+      style={{ 
+        width: 250, 
+        marginBottom: 20,
+        marginTop: 20,
+        }}
     />
     <Text style={textStyle}>
   Название: {data.Title}
@@ -49,18 +77,13 @@ function FilmItem({ filmName }) {
   <br/>
   Длительность: {data.Runtime}
   <br/>
+  <br/>
     </Text>
+    </div>
     </div>
   );
 }
 
-function PosterItem({filmName}) {
-  const data = getPoster(filmName);
-  if (!data) {
-    return <Spin />;
-  }
-  return (data);
-}
 
 export default function AppContent() {
   const storage = [
@@ -68,17 +91,23 @@ export default function AppContent() {
     "The Hateful Eight",
     "The Electrical Life of Louis Wain",
     "Jojo Rabbit",
-    "District 9"
+    "District 9",
+    "The Green Mile",
+    "Jobs",
+    "Chappie",
+    "Pacific Rim",
   ]
   const data = `The King's Speech`;
   const dataResult = useGetFilmInfo(storage)
 
   return (
     <Layout.Content style={contentStyle}>
+        <div style={filmsGrid}>
         {storage.map((film) => (
           <FilmItem key={film} filmName={film}/>
         ))
         }
+        </div>
     </Layout.Content>
   )
 }  
