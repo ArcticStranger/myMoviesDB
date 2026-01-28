@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Layout } from "antd";
-import getFilmInfo from "../controller/apiRequest";
+import getFilmInfo from "../../controller/apiRequest";
 
 const siderStyle = {
   textAlign: "center",

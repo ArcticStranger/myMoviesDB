@@ -1,14 +1,14 @@
 import { Layout, Typography, Spin } from "antd";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   contentStyle,
   textStyle,
   filmCard,
   posterStyle,
   filmsGrid,
-} from "../../styles/contentStyles";
+} from "../../../styles/contentStyles";
 
-import { useGetFilmInfo } from "../../hooks/MovieInfo";
+import { useGetFilmInfo } from "../../../hooks/MovieInfo";
 
 function FilmItem({ filmName }) {
   const data = useGetFilmInfo(filmName);

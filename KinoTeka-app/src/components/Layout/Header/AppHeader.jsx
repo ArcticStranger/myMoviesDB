@@ -1,6 +1,6 @@
 import { Layout, Input, Switch } from "antd";
 import { AudioOutlined } from "@ant-design/icons";
-import bruh from "../controller/apiRequest";
+import bruh from "../../controller/apiRequest";
 
 const { Search } = Input;
 const onChange = (checked) => {
