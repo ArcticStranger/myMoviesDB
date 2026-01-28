@@ -1,16 +1,12 @@
-// import './App.css'
-import { Layout } from 'antd';
-import AppHeader from './components/Layout/AppHeader'
-import AppContent from './components/Layout/AppContent'
-import AppSider from './components/Layout/AppSider'
-import AppFooter from './components/Layout/AppFooter'
-// const { Header, Footer, Sider, Content } = Layout;
-
-
+import { Layout } from "antd";
+import AppHeader from "./components/Layout/AppHeader";
+import AppContent from "./components/Layout/AppContent";
+import AppSider from "./components/Layout/AppSider";
+import AppFooter from "./components/Layout/AppFooter";
 
 const layoutStyle = {
   borderRadius: 8,
-  overflow: 'hidden',
+  overflow: "hidden",
 };
 
 function App() {
@@ -23,7 +19,7 @@ function App() {
       </Layout>
       <AppFooter />
     </Layout>
-  )
+  );
 }
 
-export default App
+export default App;
