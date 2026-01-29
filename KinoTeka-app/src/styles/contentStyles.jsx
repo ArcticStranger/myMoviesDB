@@ -27,16 +27,6 @@ export const filmCard = {
   borderRadius: 20,
 };
 
-export const posterStyle = (isHovered) => ({
-  width: 250,
-  marginBottom: 20,
-  marginTop: 20,
-  transition: "transform 0.2s ease, box-shadow 0.2s ease",
-  transform: isHovered ? "scale(1.05)" : "scale(1)",
-  boxShadow: isHovered ? "0 10 25px rgba(0,0,0,0.25)" : "none",
-  cursor: "pointer",
-});
-
 export const filmsGrid = {
   display: "grid",
   gridTemplateColumns: "repeat(4, 1fr)",
