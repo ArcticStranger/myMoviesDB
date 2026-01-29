@@ -21,17 +21,8 @@ export function useGetFilmInfo(filmName) {
 
 export function FilmItem({ filmName }) {
   const data = useGetFilmInfo(filmName);
-
-
-  if (!data) {
-    return (
-      <div>
-        <Spin />
-      </div>
-    );
-  }
-
   return (
+    !data ? <Spin /> : (
     <div
       style={{
         marginTop: 24,
@@ -57,5 +48,6 @@ export function FilmItem({ filmName }) {
         </Typography.Text>
       </div>
     </div>
-  );
+  )
+);
 }
