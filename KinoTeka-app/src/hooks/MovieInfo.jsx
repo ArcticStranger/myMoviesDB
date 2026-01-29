@@ -1,4 +1,11 @@
 import { useState, useEffect } from "react";
+import { Spin, Typography } from "antd";
+import "../styles/posterStyle.css"
+
+import {
+  textStyle,
+  filmCard,
+} from "../styles/contentStyles";
 
 export function useGetFilmInfo(filmName) {
   const [data, setData] = useState(null);
@@ -10,4 +17,45 @@ export function useGetFilmInfo(filmName) {
       .then((value) => setData(value));
   }, [filmName]);
   return data;
+}
+
+export function FilmItem({ filmName }) {
+  const data = useGetFilmInfo(filmName);
+
+
+  if (!data) {
+    return (
+      <div>
+        <Spin />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        marginTop: 24,
+        marginLeft: 24,
+      }}
+    >
+      <div
+        style={filmCard}
+      >
+        <img
+          src={data.Poster}
+          alt={data.Title}
+          className="posterStyle"
+        />
+        <Typography.Text style={textStyle}>
+          Название: {data.Title}
+          <br />
+          Год выпуска: {data.Year}
+          <br />
+          Длительность: {data.Runtime}
+          <br />
+          <br />
+        </Typography.Text>
+      </div>
+    </div>
+  );
 }

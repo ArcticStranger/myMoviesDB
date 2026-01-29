@@ -1,0 +1,14 @@
+.posterStyle {
+  width: 250px;
+  margin: 20px 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: none;
+  cursor: pointer;
+  transform: scale(1);
+}
+
+.posterStyle:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10 25px rgba(0, 0, 0, 0.25);
+}
+

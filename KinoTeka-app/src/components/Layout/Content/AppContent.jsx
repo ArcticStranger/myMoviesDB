@@ -2,56 +2,11 @@ import { Layout, Typography, Spin } from "antd";
 import { useState } from "react";
 import {
   contentStyle,
-  textStyle,
-  filmCard,
-  posterStyle,
   filmsGrid,
 } from "../../../styles/contentStyles";
 
-import { useGetFilmInfo } from "../../../hooks/MovieInfo";
+import { useGetFilmInfo, FilmItem } from "../../../hooks/MovieInfo";
 
-function FilmItem({ filmName }) {
-  const data = useGetFilmInfo(filmName);
-  const [isHovered, setIsHovered] = useState(false);
-
-  if (!data) {
-    return (
-      <div>
-        <Spin />
-      </div>
-    );
-  }
-
-  return (
-    <div
-      style={{
-        marginTop: 24,
-        marginLeft: 24,
-      }}
-    >
-      <div
-        style={filmCard}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <img
-          src={data.Poster}
-          alt={data.Title}
-          style={posterStyle(isHovered)}
-        />
-        <Typography.Text style={textStyle}>
-          Название: {data.Title}
-          <br />
-          Год выпуска: {data.Year}
-          <br />
-          Длительность: {data.Runtime}
-          <br />
-          <br />
-        </Typography.Text>
-      </div>
-    </div>
-  );
-}
 
 export default function AppContent() {
   const storage = [
