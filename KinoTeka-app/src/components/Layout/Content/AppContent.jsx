@@ -1,12 +1,8 @@
 import { Layout, Typography, Spin } from "antd";
 import { useState } from "react";
-import {
-  contentStyle,
-  filmsGrid,
-} from "../../../styles/contentStyles";
+import { contentStyle, filmsGrid } from "../../../styles/contentStyles";
 
 import { useGetFilmInfo, FilmItem } from "../../../hooks/MovieInfo";
-
 
 export default function AppContent() {
   const storage = [
