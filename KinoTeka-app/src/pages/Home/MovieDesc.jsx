@@ -1,6 +1,6 @@
 
 import { Layout } from "antd";
-import { SearchInput } from "../../components/common/Input/SearchInput"
+import SearchInput from "../../components/common/Input/SearchInput"
 const layoutStyle = {
   borderRadius: 8,
   overflow: "hidden",

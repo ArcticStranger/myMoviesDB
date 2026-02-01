@@ -1,17 +1,20 @@
 import { useState } from 'react'
 
-export function SearchTrigger(check, value) {
+export default function SearchTrigger({value}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
 
-  const handleSearch = (value) => {
-    setSearchQuery(value);
-    setHasSearched(true);
-  };
+  // if (!hasSearched) {
+  //   setSearchQuery(value);
+  //  setHasSearched(true);
+  // };
 
-  check ? handleSearch(value) : null;
-
-  return searchQuery;
+  return (
+    <input
+      searchQuery={value}
+      hasSearched={true}
+     />
+  );
 }
 
 // const { Search } = Input;
