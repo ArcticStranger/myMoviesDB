@@ -8,11 +8,11 @@ const onChange = (checked) => {
 };
 
 bruh();
-export default function AppHeader() {
+export default function AppHeader({ onSearch }) {
   return (
     <Layout.Header style={{ display: "flex", alignItems: "center" }}>
       <div className="demo-logo" />
-      <SearchInput />
+      <SearchInput onSearch={onSearch} />
       <Switch
         defaultChecked
         onChange={onChange}
