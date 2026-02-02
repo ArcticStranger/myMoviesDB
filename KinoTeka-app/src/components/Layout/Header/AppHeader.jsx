@@ -1,13 +1,11 @@
 import { Layout, Switch } from "antd";
-import { AudioOutlined } from "@ant-design/icons";
-import bruh from "../../controller/apiRequest";
+
 import SearchInput from "/src/components/common/Input/SearchInput.jsx";
 
 const onChange = (checked) => {
   console.log(`switch to ${checked}`);
 };
 
-bruh();
 export default function AppHeader({ onSearch }) {
   return (
     <Layout.Header style={{ display: "flex", alignItems: "center" }}>

@@ -3,18 +3,30 @@ import AppContent from "../../components/Layout/Content/AppContent";
 import AppSider from "../../components/Layout/Sidebar/AppSider";
 import AppFooter from "../../components/Layout/Footer/AppFooter";
 import { Layout } from "antd";
-import useSearch from "../../hooks/useSearch.jsx"
+import useSearch from "../../hooks/useSearch.jsx";
 
 const layoutStyle = {
   borderRadius: 8,
   overflow: "hidden",
 };
 
+export const defaultMovies = [
+  "The King's Speech",
+  "The Hateful Eight",
+  "Jojo Rabbit",
+  "District 9",
+  "The Green Mile",
+  "Jobs",
+  "Chappie",
+  "Pacific Rim",
+];
+
 export default function HomePage() {
   const search = useSearch();
+  
   return (
     <Layout style={layoutStyle}>
-      <AppHeader onSearch={search.onSearch}/>
+      <AppHeader onSearch={search.onSearch} />
       <Layout>
         <AppContent search={search} />
         <AppSider />
@@ -23,4 +35,3 @@ export default function HomePage() {
     </Layout>
   );
 }
-
