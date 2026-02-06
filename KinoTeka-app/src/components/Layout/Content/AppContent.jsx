@@ -1,32 +1,20 @@
-import { Layout } from "antd";
+import { Layout, Spin } from "antd";
 import { contentStyle, filmsGrid } from "../../../styles/contentStyles";
 import {
   FilmItem,
   FilmItemList,
-} from "../../../hooks/MovieInfo";
+} from "./ContentItems";
 
-const defaultMovies = [
-  "The King's Speech",
-  "The Hateful Eight",
-  "Jojo Rabbit",
-  "District 9",
-  "The Green Mile",
-  "Jobs",
-  "Chappie",
-  "Pacific Rim",
-];
 
-export default function AppContent({ search }) {
-  console.log("AppContent search:", search);
-  
-  return (
+export default function AppContent({ search, database, datasearch }) {
+  return (!database || !database.length) ? (<Spin />) : (
     <Layout.Content style={contentStyle}>
       <div style={filmsGrid}>
         {search?.hasSearched ? (
-          <FilmItemList data={search.query} />
+          <FilmItemList searchData={datasearch} />
         ) : (
-          defaultMovies.map((movie) => (
-            <FilmItem key={movie} data={movie} />
+          database.map((movie) => (
+            <FilmItem key={movie.imdbID || movie.Title} check={movie} />
           ))
         )}
       </div>
