@@ -7,6 +7,7 @@ import AppFooter from "./components/Layout/Footer/AppFooter";
 import { Layout } from "antd";
 import useSearch from "./hooks/useSearch";
 
+import { contentStyle } from "./styles/contentStyles.jsx";
 const layoutStyle = { borderRadius: 8, overflow: "hidden" };
 
 function App() {
@@ -17,16 +18,16 @@ const search = useSearch();
         <Layout style={layoutStyle}>
       <AppHeader onSearch={search.onSearch} />
       <Layout>
+        <Layout.Content style={contentStyle}>
     <Routes>
       <Route path="/" element={<HomePage onSearch={search.onSearch}/>} />
       <Route path="/movie/:imdbID" element={<MovieDescription search={search}/>} />
     </Routes>
+    </Layout.Content>
         <AppSider />
       </Layout>
       <AppFooter />
     </Layout>
-    
-
   );
 }
 

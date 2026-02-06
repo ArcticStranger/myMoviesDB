@@ -8,7 +8,7 @@ import {
 
 export default function AppContent({ search, database, datasearch }) {
   return (!database || !database.length) ? (<Spin />) : (
-    <Layout.Content style={contentStyle}>
+      <>
       <div style={filmsGrid}>
         {search?.hasSearched ? (
           <FilmItemList searchData={datasearch} />
@@ -18,6 +18,6 @@ export default function AppContent({ search, database, datasearch }) {
           ))
         )}
       </div>
-    </Layout.Content>
+    </>
   );
 }

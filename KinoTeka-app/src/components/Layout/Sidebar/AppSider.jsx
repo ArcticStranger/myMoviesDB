@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Layout } from "antd";
 
 const siderStyle = {
   textAlign: "center",
+  minHeight: "calc(100vh - 90px)",
   lineHeight: "120px",
   color: "#fff",
   backgroundColor: "#1677ff",

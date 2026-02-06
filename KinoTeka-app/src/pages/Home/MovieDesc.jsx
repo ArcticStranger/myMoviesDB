@@ -27,7 +27,7 @@ export default function MovieDescription({search}) {
   
 
   return (
-    <Layout.Content style={contentStyle}>
+    <>
       <div style={descriptionStyles}>
         <img src={data.Poster} style={descPosterStyle} alt={data.Title} />
         <Typography.Text style={textStyle}>
@@ -55,6 +55,6 @@ export default function MovieDescription({search}) {
       <div style={{ marginTop: 16 }}>
         <Link to="/">Назад</Link>
       </div>
-    </Layout.Content>
+      </>
   );
 }
