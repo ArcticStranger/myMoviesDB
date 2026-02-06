@@ -55,7 +55,6 @@ export function useGetFilmInfoById(imdbID) {
   return data;
 }
 
-
 export function FilmItemDesc({ data }) {
   const check = useGetFilmInfoById(data);
   return !check ? (
@@ -78,4 +77,3 @@ export function FilmItemDesc({ data }) {
     </div>
   );
 }
-

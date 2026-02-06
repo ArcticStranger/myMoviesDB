@@ -1,14 +1,12 @@
 import { Layout, Spin } from "antd";
 import { contentStyle, filmsGrid } from "../../../styles/contentStyles";
-import {
-  FilmItem,
-  FilmItemList,
-} from "./ContentItems";
-
+import { FilmItem, FilmItemList } from "./ContentItems";
 
 export default function AppContent({ search, database, datasearch }) {
-  return (!database || !database.length) ? (<Spin />) : (
-      <>
+  return !database || !database.length ? (
+    <Spin />
+  ) : (
+    <>
       <div style={filmsGrid}>
         {search?.hasSearched ? (
           <FilmItemList searchData={datasearch} />

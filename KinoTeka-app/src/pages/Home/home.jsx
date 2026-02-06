@@ -7,8 +7,8 @@ import useSearch from "../../hooks/useSearch.jsx";
 
 import {
   useGetFilmInfoBySearch,
-  useGetFilmInfoDefaults
-} from "../../hooks/useMovieInfo.jsx"
+  useGetFilmInfoDefaults,
+} from "../../hooks/useMovieInfo.jsx";
 
 const layoutStyle = {
   borderRadius: 8,
@@ -24,13 +24,11 @@ export const defaultMovies = [
   "Jobs",
   "Chappie",
   "Pacific Rim",
-]; 
+];
 
-export default function HomePage({onSearch}) {
+export default function HomePage({ onSearch }) {
   const def = useGetFilmInfoDefaults(defaultMovies);
   const input = useGetFilmInfoBySearch(onSearch.query);
 
-  return (
-        <AppContent search={onSearch} database={def} datasearch={input} />
-  );
+  return <AppContent search={onSearch} database={def} datasearch={input} />;
 }

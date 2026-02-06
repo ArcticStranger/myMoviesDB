@@ -17,14 +17,13 @@ const descPosterStyle = {
   transform: "scale(1)",
 };
 
-export default function MovieDescription({search}) {
+export default function MovieDescription({ search }) {
   const { imdbID } = useParams();
   const data = useGetFilmInfoById(imdbID);
 
   if (!data) {
     return <Spin />;
   }
-  
 
   return (
     <>
@@ -55,6 +54,6 @@ export default function MovieDescription({search}) {
       <div style={{ marginTop: 16 }}>
         <Link to="/">Назад</Link>
       </div>
-      </>
+    </>
   );
 }

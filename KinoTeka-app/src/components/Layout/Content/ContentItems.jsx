@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import "../../../styles/posterStyle.css";
 import { textStyle, filmCard } from "../../../styles/contentStyles";
 
-
 export function FilmItem({ check }) {
   return !check ? (
     <Spin />
@@ -32,19 +31,18 @@ export function FilmItem({ check }) {
 }
 
 export function FilmItemList({ searchData }) {
-  
   if (!searchData) {
     return <Spin />;
   }
-  
+
   if (!searchData.Search) {
     return <Typography.Text>Фильмы не найдены</Typography.Text>;
   }
-  
-  return (
-    searchData.Search.map(({ Title, Year, Type, Poster, imdbID }) => {
-       console.log(Title, Year, Type, Poster)
-       return ( <div style={filmCard} key={imdbID}>
+
+  return searchData.Search.map(({ Title, Year, Type, Poster, imdbID }) => {
+    console.log(Title, Year, Type, Poster);
+    return (
+      <div style={filmCard} key={imdbID}>
         <Link to={`/movie/${imdbID}`} style={{ textDecoration: "none" }}>
           <img src={Poster} className="posterStyle" />
         </Link>
@@ -55,10 +53,9 @@ export function FilmItemList({ searchData }) {
           <br />
           <br />
         </Typography.Text>
-      </div> )
-
-    })
-  )
+      </div>
+    );
+  });
 }
 
 // export function FilmItemDesc({ data }) {
@@ -83,4 +80,3 @@ export function FilmItemList({ searchData }) {
 //     </div>
 //   );
 // }
-
