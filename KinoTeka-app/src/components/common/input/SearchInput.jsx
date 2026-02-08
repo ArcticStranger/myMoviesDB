@@ -4,7 +4,7 @@ const { Search } = Input;
 export default function SearchInput({ onSearch }) {
   return (
     <Search
-      placeholder="input search text"
+      placeholder="Введите название фильма"
       style={{ maxWidth: "30vh", marginRight: "3rem" }}
       onSearch={onSearch}
       size="large"
