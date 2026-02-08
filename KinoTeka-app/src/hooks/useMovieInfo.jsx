@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Spin, Typography } from "antd";
-import { Link } from "react-router-dom";
 import "../styles/posterStyle.css";
 
 import { textStyle, filmCard } from "../styles/contentStyles";

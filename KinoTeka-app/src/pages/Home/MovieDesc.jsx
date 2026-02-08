@@ -1,6 +1,5 @@
-import { Layout, Spin, Typography } from "antd";
+import { Spin, Typography } from "antd";
 import { Link, useParams } from "react-router-dom";
-import { contentStyle } from "../../styles/contentStyles";
 import { useGetFilmInfoById } from "../../hooks/useMovieInfo";
 
 const descriptionStyles = {

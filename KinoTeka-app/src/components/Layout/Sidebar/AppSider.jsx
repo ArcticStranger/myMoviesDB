@@ -1,14 +1,10 @@
 import { useState } from "react";
-
-import { CarryOutOutlined } from "@ant-design/icons";
 import {
   Layout,
   Space,
   Switch,
   Select,
   Input,
-  Button,
-  Drawer,
   Radio,
 } from "antd";
 
@@ -17,45 +13,6 @@ const switchStyle = {
   marginTop: 15,
   minWidth: 200,
 };
-
-const treeData = [
-  {
-    value: "parent 1",
-    title: "parent 1",
-    icon: <CarryOutOutlined />,
-    children: [
-      {
-        value: "parent 1-0",
-        title: "parent 1-0",
-        icon: <CarryOutOutlined />,
-        children: [
-          {
-            value: "leaf1",
-            title: "leaf1",
-            icon: <CarryOutOutlined />,
-          },
-          {
-            value: "leaf2",
-            title: "leaf2",
-            icon: <CarryOutOutlined />,
-          },
-        ],
-      },
-      {
-        value: "parent 1-1",
-        title: "parent 1-1",
-        icon: <CarryOutOutlined />,
-        children: [
-          {
-            value: "sss",
-            title: "sss",
-            icon: <CarryOutOutlined />,
-          },
-        ],
-      },
-    ],
-  },
-];
 
 const siderStyle = {
   textAlign: "center",
