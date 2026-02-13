@@ -1,7 +1,10 @@
 import { Input } from "antd";
 const { Search } = Input;
 
+import searchReducer from "../../redux/partReducers/searchReducer";
+
 export default function SearchInput({ onSearch }) {
+  
   return (
     <Search
       placeholder="Введите название фильма"

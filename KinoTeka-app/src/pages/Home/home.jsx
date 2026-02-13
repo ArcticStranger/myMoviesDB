@@ -1,4 +1,5 @@
 import AppContent from "../../components/Layout/Content/AppContent";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   useGetFilmInfoBySearch,
@@ -17,9 +18,13 @@ export const defaultMovies = [
 ];
 
 export default function HomePage({ search, filterData }) {
+
   const def = useGetFilmInfoDefaults(defaultMovies);
   const input = useGetFilmInfoBySearch(search.query);
 
+  const searchCounter = useSelector((searchState) => searchState.query);
+  console.log(searchCounter);
+  const searchDispatch = useDispatch();
   return (
     <AppContent
       search={search}

@@ -11,6 +11,7 @@ import useFilter from "./hooks/useFilter.jsx";
 import { contentStyle } from "./styles/contentStyles.jsx";
 const layoutStyle = { borderRadius: 8, overflow: "hidden" };
 
+
 function App() {
   const search = useSearch();
   const filter = useFilter();

@@ -2,6 +2,8 @@ import { Layout, Switch } from "antd";
 
 import SearchInput from "/src/components/common/Input/SearchInput.jsx";
 
+
+
 export default function AppHeader({ onSearch }) {
   return (
     <Layout.Header style={{ display: "flex", alignItems: "center" }}>
