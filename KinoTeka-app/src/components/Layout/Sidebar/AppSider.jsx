@@ -11,7 +11,7 @@ import {
 const switchStyle = {
   transform: "scale(1.5)",
   marginTop: 15,
-  minWidth: 200,
+  minWidth: 250,
 };
 
 const siderStyle = {
@@ -73,8 +73,8 @@ export default function AppSider({ filterData }) {
           />
         )}
         <Switch
-          checkedChildren="Поиск по годам"
-          unCheckedChildren="Поиск по годам"
+          checkedChildren="Сортировка по годам вкл."
+          unCheckedChildren="Сортировка по годам откл."
           checked={filterData.year}
           onChange={(checked) => filterData.onYear(checked)}
           style={switchStyle}
@@ -86,7 +86,7 @@ export default function AppSider({ filterData }) {
           onChange={(checked) => filterData.onKeyword(checked)}
           style={switchStyle}
         />
-        {filterData.keyword && (
+         {filterData.keyword && (
           <Input
             value={filterData.keywordQuery}
             onChange={(e) => filterData.onKeywordChange(e.target.value)}
@@ -95,6 +95,14 @@ export default function AppSider({ filterData }) {
             allowClear
           />
         )}
+        <Switch
+          checkedChildren="Сортировка по алфавиту вкл. (A-Z)"
+          unCheckedChildren="Сортировка по алфавиту откл."
+          checked={filterData.alphabet}
+          onChange={(checked) => filterData.onAlphabetSort(checked)}
+          style={switchStyle}
+        />
+       
       </Space>
 
       <Space>

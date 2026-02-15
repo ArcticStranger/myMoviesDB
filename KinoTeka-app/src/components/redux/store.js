@@ -1,29 +1,11 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-import searchReducer from "./partReducers/searchReducer.js"
-import filterReducer from "./partReducers/filterReducer.js"
+import { configureStore } from "@reduxjs/toolkit";
+import searchSlice from "./partReducers/searchSlice.js"
+import filterSlice from "./partReducers/filterSlice.js"
 
 
 export const store = configureStore({
   reducer: {
-    search: searchReducer,
-    filter: filterReducer,
-  }
+    search: searchSlice,
+    filter: filterSlice,
+  },
 })
-
-const searchSlice = createSlice( {
-  name: 'search',
-  initialState: {
-      query: "",
-      hasSearched: false,
-  },
-  reducers: {
-    onSearch(state, action) {
-      state.query = action.payload;
-      state.hasSearched = true;
-    },
-    clearSearch(state) {
-      state.query = "";
-      state.hasSearched = false;
-    },
-  },
-})  

@@ -40,7 +40,7 @@ export function FilmItemList({ searchData }) {
   }
 
   return searchData.Search.map(({ Title, Year, Type, Poster, imdbID }) => {
-    console.log(Title, Year, Type, Poster);
+    // console.log(Title, Year, Type, Poster);
     return (
       <div style={filmCard} key={imdbID}>
         <Link to={`/movie/${imdbID}`} style={{ textDecoration: "none" }}>
@@ -57,26 +57,3 @@ export function FilmItemList({ searchData }) {
     );
   });
 }
-
-// export function FilmItemDesc({ data }) {
-//   const check = useGetFilmInfoById(data);
-//   return !check ? (
-//     <Spin />
-//   ) : (
-//     <div
-//       style={{
-//         marginTop: 24,
-//         marginLeft: 24,
-//       }}
-//     >
-//       <div style={filmCard}>
-//         <img src={check.Poster} alt={check.Title} className="posterStyle" />
-//         <Typography.Text style={textStyle}>
-//           <br />
-//           imdbID: {check.imdbID}
-//           <br />
-//         </Typography.Text>
-//       </div>
-//     </div>
-//   );
-// }

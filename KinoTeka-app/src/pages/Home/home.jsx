@@ -17,20 +17,12 @@ export const defaultMovies = [
   "Pacific Rim",
 ];
 
-export default function HomePage({ search, filterData }) {
-
+export default function HomePage({filter}) {
   const def = useGetFilmInfoDefaults(defaultMovies);
-  const input = useGetFilmInfoBySearch(search.query);
-
-  const searchCounter = useSelector((searchState) => searchState.query);
-  console.log(searchCounter);
-  const searchDispatch = useDispatch();
   return (
     <AppContent
-      search={search}
       database={def}
-      datasearch={input}
-      filterData={filterData}
+      filterData={filter}
     />
   );
 }

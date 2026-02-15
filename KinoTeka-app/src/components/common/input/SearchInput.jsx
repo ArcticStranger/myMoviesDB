@@ -1,16 +1,21 @@
 import { Input } from "antd";
+import { useDispatch } from "react-redux";
+import { setQuery } from "../../redux/partReducers/searchSlice"
+
 const { Search } = Input;
 
-import searchReducer from "../../redux/partReducers/searchReducer";
 
-export default function SearchInput({ onSearch }) {
-  
+export default function SearchInput() {
+  const dispatch = useDispatch();
   return (
     <Search
       placeholder="Введите название фильма"
       style={{ maxWidth: "30vh", marginRight: "3rem" }}
-      onSearch={onSearch}
+      onSearch={(value) => {
+        dispatch(setQuery(value))
+      }}
       size="large"
+
       enterButton
     />
   );

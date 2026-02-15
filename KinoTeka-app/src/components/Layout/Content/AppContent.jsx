@@ -2,43 +2,35 @@ import { Spin } from "antd";
 import { filmsGrid } from "../../../styles/contentStyles";
 import { FilmItem, FilmItemList } from "./ContentItems";
 
+import { useSelector } from "react-redux";
+import { useGetFilmInfoBySearch } from "../../../hooks/useMovieInfo";
+import sortingData from "../../../utils/sortingData"
+
 export default function AppContent({
-  search,
   database,
-  datasearch,
-  filterData,
+  filterData
 }) {
+  const searchQuery = useSelector((state) => state.search.query);
+  const hasSearched = useSelector((state) => state.search.hasSearched);
+
+  const datasearch = useGetFilmInfoBySearch(searchQuery);
+  
+
+  
+
   if (!database || !database.length) return <Spin />;
-
-  const parseYear = (value) => {
-    const num = Number.parseInt(value, 10);
-    return Number.isNaN(num) ? 0 : num;
-  };
-
-  const byYear = (a, b) => parseYear(a.Year) - parseYear(b.Year);
-
   const keyword = filterData?.keywordQuery?.trim().toLowerCase();
+
+  const sortedDatabase = sortingData(
+    filterData.year, 
+    filterData.alphabet, 
+    database, 
+    keyword
+  );
+
   const keywordActive = filterData?.keyword && !!keyword;
   const genreActive = filterData?.genre && !!filterData?.selectedGenre;
 
-  const matchesKeyword = (movie) => {
-    if (!keywordActive) return true;
-    return Object.values(movie).some((value) => {
-      if (value == null) return false;
-      return String(value).toLowerCase().includes(keyword);
-    });
-  };
-
-  const baseDatabase = database.filter((movie) => {
-    if (genreActive && !movie.Genre?.includes(filterData.selectedGenre)) {
-      return false;
-    }
-    return matchesKeyword(movie);
-  });
-
-  const sortedDatabase = filterData?.year
-    ? [...baseDatabase].sort(byYear)
-    : baseDatabase;
 
   const baseSearch =
     datasearch?.Search && keywordActive
@@ -55,7 +47,7 @@ export default function AppContent({
   return (
     <>
       <div style={filmsGrid}>
-        {search?.hasSearched ? (
+        {hasSearched && searchQuery ? (
           <FilmItemList searchData={searchData} />
         ) : (
           sortedDatabase.map((movie) => (
