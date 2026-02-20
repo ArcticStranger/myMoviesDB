@@ -12,10 +12,11 @@ export function useGetFilmInfoBySearch(filmName) {
       return;
     }
     fetch(
-      `${import.meta.env.VITE_FILMDATA_SRC}?apikey=${import.meta.env.VITE_API_KEY}&s=${filmName}`
+      `${import.meta.env.VITE_FILMDATA_SRC}?apikey=${import.meta.env.VITE_API_KEY}&s=${encodeURIComponent(filmName)}`
     )
       .then((value) => value.json())
-      .then((value) => setData(value));
+      .then((value) => setData(value))
+      .catch(() => setData({ Search: [] }));
   }, [filmName]);
   return data;
 }
@@ -27,13 +28,19 @@ export function useGetFilmInfoDefaults(filmNames = []) {
       setData(null);
       return;
     }
-    Promise.all(
+    Promise.allSettled(
       filmNames.map((filmName) =>
         fetch(
-          `${import.meta.env.VITE_FILMDATA_SRC}?apikey=${import.meta.env.VITE_API_KEY}&t=${filmName}`
+          `${import.meta.env.VITE_FILMDATA_SRC}?apikey=${import.meta.env.VITE_API_KEY}&t=${encodeURIComponent(filmName)}`
         ).then((value) => value.json())
       )
-    ).then((value) => setData(value));
+    ).then((results) => {
+      const movies = results
+        .filter((result) => result.status === "fulfilled")
+        .map((result) => result.value)
+        .filter((movie) => movie?.Response !== "False");
+      setData(movies);
+    });
   }, [filmNames]);
   return data;
 }

@@ -1,7 +1,33 @@
-import { Spin, Typography } from "antd";
+import { Spin, Typography, Button } from "antd";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../../styles/posterStyle.css";
+import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { textStyle, filmCard } from "../../../styles/contentStyles";
+import { isFavoriteFilm, toggleFavoriteFilm } from "../../../services/localStorage";
+
+const starStyle = {
+  fontSize: 35,
+  color: "#ff0000",
+};
+
+function FavoriteStarButton({ movie, ariaLabel }) {
+  const [isFavorite, setIsFavorite] = useState(() => isFavoriteFilm(movie?.imdbID));
+
+  const handleFavoriteClick = () => {
+    const next = toggleFavoriteFilm(movie);
+    setIsFavorite(next);
+  };
+
+  return (
+    <Button
+      type="text"
+      aria-label={ariaLabel}
+      onClick={handleFavoriteClick}
+      icon={isFavorite ? <StarFilled style={starStyle} /> : <StarOutlined style={starStyle} />}
+    />
+  );
+}
 
 export function FilmItem({ check }) {
   return !check ? (
@@ -25,6 +51,7 @@ export function FilmItem({ check }) {
           Жанр: {check.Genre}
           <br />
         </Typography.Text>
+        <FavoriteStarButton movie={check} ariaLabel="toggle-favorite" />
       </div>
     </div>
   );
@@ -39,7 +66,9 @@ export function FilmItemList({ searchData }) {
     return <Typography.Text>Фильмы не найдены</Typography.Text>;
   }
 
-  return searchData.Search.map(({ Title, Year, Type, Poster, imdbID }) => {
+  return searchData.Search.map((movie) => {
+    const { Title, Year, Type, Poster, imdbID } = movie;
+
     // console.log(Title, Year, Type, Poster);
     return (
       <div style={filmCard} key={imdbID}>
@@ -53,6 +82,10 @@ export function FilmItemList({ searchData }) {
           <br />
           <br />
         </Typography.Text>
+        <FavoriteStarButton
+          movie={{ Title, Year, Type, Poster, imdbID }}
+          ariaLabel="toggle-favorite-search"
+        />
       </div>
     );
   });

@@ -1,44 +1,44 @@
-import { Spin } from "antd";
+import { Spin, Typography } from "antd";
 import { filmsGrid } from "../../../styles/contentStyles";
 import { FilmItem, FilmItemList } from "./ContentItems";
 
 import { useSelector } from "react-redux";
 import { useGetFilmInfoBySearch } from "../../../hooks/useMovieInfo";
-import sortingData from "../../../utils/sortingData"
+import sortingData from "../../../utils/sortingData";
 
-export default function AppContent({
-  database,
-  filterData
-}) {
+export default function AppContent({ database, filterData }) {
   const searchQuery = useSelector((state) => state.search.query);
   const hasSearched = useSelector((state) => state.search.hasSearched);
 
   const datasearch = useGetFilmInfoBySearch(searchQuery);
-  
 
-  
+  if (!database) return <Spin />;
+  if (!database.length)
+    return <Typography.Text>Не удалось загрузить фильмы</Typography.Text>;
 
-  if (!database || !database.length) return <Spin />;
-  const keyword = filterData?.keywordQuery?.trim().toLowerCase();
-
-  const sortedDatabase = sortingData(
-    filterData.year, 
-    filterData.alphabet, 
-    database, 
-    keyword
-  );
-
-  const keywordActive = filterData?.keyword && !!keyword;
+  const keyword = filterData?.keywordQuery?.trim().toLowerCase() || "";
+  const keywordForFilter = filterData?.keyword ? keyword : "";
   const genreActive = filterData?.genre && !!filterData?.selectedGenre;
 
+  const baseDatabase = genreActive
+    ? database.filter((movie) => movie.Genre?.includes(filterData.selectedGenre))
+    : database;
 
-  const baseSearch =
-    datasearch?.Search && keywordActive
-      ? datasearch.Search.filter(matchesKeyword)
-      : datasearch?.Search;
+  const sortedDatabase = sortingData({
+    year: filterData?.year,
+    alphabet: filterData?.alphabet,
+    database: baseDatabase,
+    keyword: keywordForFilter,
+  });
 
-  const sortedSearch =
-    filterData?.year && baseSearch ? [...baseSearch].sort(byYear) : baseSearch;
+  const sortedSearch = datasearch?.Search
+    ? sortingData({
+        year: filterData?.year,
+        alphabet: filterData?.alphabet,
+        database: datasearch.Search,
+        keyword: keywordForFilter,
+      })
+    : datasearch?.Search;
 
   const searchData = datasearch
     ? { ...datasearch, Search: sortedSearch }

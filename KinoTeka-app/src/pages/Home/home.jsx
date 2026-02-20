@@ -1,10 +1,5 @@
 import AppContent from "../../components/Layout/Content/AppContent";
-import { useDispatch, useSelector } from "react-redux";
-
-import {
-  useGetFilmInfoBySearch,
-  useGetFilmInfoDefaults,
-} from "../../hooks/useMovieInfo.jsx";
+import { useGetFilmInfoDefaults } from "../../hooks/useMovieInfo.jsx";
 
 export const defaultMovies = [
   "The King's Speech",
@@ -17,12 +12,7 @@ export const defaultMovies = [
   "Pacific Rim",
 ];
 
-export default function HomePage({filter}) {
+export default function HomePage({ filterData }) {
   const def = useGetFilmInfoDefaults(defaultMovies);
-  return (
-    <AppContent
-      database={def}
-      filterData={filter}
-    />
-  );
+  return <AppContent database={def} filterData={filterData} />;
 }

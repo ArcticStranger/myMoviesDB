@@ -1,0 +1,9 @@
+.starIcon {
+  font-size: 35px;
+  color: #ff0000;
+
+}
+
+.starIcon::hover {
+  color: #52c41a;
+}

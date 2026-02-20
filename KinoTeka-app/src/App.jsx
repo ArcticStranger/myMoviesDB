@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/Home/home.jsx";
 import MovieDescription from "./pages/Home/MovieDesc.jsx";
+import FavoriteList from "./pages/Home/FavoriteList.jsx";
 import AppHeader from "./components/Layout/Header/AppHeader";
 import AppSider from "./components/Layout/Sidebar/AppSider";
 import AppFooter from "./components/Layout/Footer/AppFooter";
@@ -28,6 +29,10 @@ function App() {
             <Route
               path="/movie/:imdbID"
               element={<MovieDescription search={search} />}
+            />
+            <Route 
+              path=""
+              element={<FavoriteList />}
             />
           </Routes>
         </Layout.Content>

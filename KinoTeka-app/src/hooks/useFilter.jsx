@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function useFilter() {
   const [genre, setGenre] = useState(false);
   const [year, setYear] = useState(false);
+  const [alphabet, setAlphabet] = useState(false);
   const [keyword, setKeyword] = useState(false);
   const [selectedGenre, setSelectedGenre] = useState(null);
   const [keywordQuery, setKeywordQuery] = useState("");
@@ -23,6 +24,10 @@ export default function useFilter() {
 
   const onKeywordChange = (value) => {
     setKeywordQuery(value);
+  };
+
+  const onAlphabetSort = (checked) => {
+    setAlphabet(checked);
   };
 
   const onYear = (checked) => {
@@ -47,11 +52,13 @@ export default function useFilter() {
     onGenre,
     onGenreChange,
     onKeywordChange,
+    onAlphabetSort,
     onYear,
     onKeyword,
     genre,
     selectedGenre,
     year,
+    alphabet,
     keyword,
     keywordQuery,
   };
