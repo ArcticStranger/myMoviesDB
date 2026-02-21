@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setFavoriteFilm, getFavoriteFilms } from "../../../services/localStorage"
 
-
 const buttonSlice = createSlice({
   name: "button",
   initialState: {
@@ -13,9 +12,12 @@ const buttonSlice = createSlice({
       state.hasButtonTapped = true;
       state.value.push(action.payload); 
     },
+    clearButton(state) {
+      state.hasButtonTapped = false;
+    }
   },
 });
 
-export const { setButton } = buttonSlice.actions;
+export const { setButton, clearButton } = buttonSlice.actions;
 
 export default buttonSlice.reducer;

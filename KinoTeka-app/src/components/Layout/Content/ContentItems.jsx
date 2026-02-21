@@ -1,6 +1,6 @@
 import { Spin, Typography, Button } from "antd";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../../styles/posterStyle.css";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { textStyle, filmCard } from "../../../styles/contentStyles";
@@ -35,6 +35,7 @@ function FavoriteStarButton({ movie, ariaLabel }) {
 }
 
 export function FilmItem({ check }) {
+  const navigate = useNavigate();
   return !check ? (
     <Spin />
   ) : (
@@ -46,7 +47,8 @@ export function FilmItem({ check }) {
     >
       <div style={filmCard}>
         <Link to={`/movie/${check.imdbID}`} style={{ textDecoration: "none" }}>
-          <img src={check.Poster} alt={check.Title} className="posterStyle" />
+          <img src={check.Poster} alt={check.Title} className="posterStyle"
+          onClick={navigate(`/movie/${check.imdbID}`)} />
         </Link>
         <Typography.Text style={textStyle}>
           Название: {check.Title}
