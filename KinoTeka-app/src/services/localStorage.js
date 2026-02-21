@@ -34,8 +34,11 @@ export function toggleFavoriteFilm(movie) {
   const exists = favorites.some((item) => item.imdbID === movie.imdbID);
 
   if (exists) {
+    const check = window.confirm("Вы точно хотите удалить из избранного?");
+    if (check === true) {
     writeFavorites(favorites.filter((item) => item.imdbID !== movie.imdbID));
     return false;
+    } else return true;
   }
 
   writeFavorites([...favorites, movie]);
@@ -43,7 +46,6 @@ export function toggleFavoriteFilm(movie) {
   return true;
 }
 
-// Backward-compatible wrappers for existing imports.
 export function getFavoriteFilm(imdbID) {
   return isFavoriteFilm(imdbID);
 }

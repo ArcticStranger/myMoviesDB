@@ -22,7 +22,7 @@ function App() {
   return (
     <Layout style={layoutStyle}>
       <AppHeader />
-      <Layout>
+      <Layout style={{ marginTop: 64 }}>
         <Layout.Content style={contentStyle}>
           <Routes>
           <Route path="/" element={<Navigate to="/main" replace />}/>

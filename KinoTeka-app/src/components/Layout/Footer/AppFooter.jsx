@@ -1,14 +1,46 @@
 import { Layout } from "antd";
+import { GithubOutlined, WindowsFilled } from "@ant-design/icons";
 
 const footerStyle = {
-  textAlign: "center",
+  
   display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
+  textAlign: "start",
+  fontSize: "20px",
   color: "#fff",
-  backgroundColor: "#4096ff",
+  backgroundColor: "#000000",
 };
 
+const hrefStyle = {
+  color: "#fff",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+}
+
 export default function AppFooter() {
-  return <Layout.Footer style={footerStyle}>Footer</Layout.Footer>;
+  return <Layout.Footer style={footerStyle}>
+ 
+  <a href="https://github.com/ArcticStranger"
+  style={hrefStyle}>Мой Github
+
+   <GithubOutlined style={{
+    "fontSize" : 30,
+    "justifyContent": "center",
+    "marginLeft" : 10,
+    "marginRight" : 40,
+    }}/> 
+    </a>
+
+      <a href="mailto:atlasovtimofey@hotmail.com"
+  style={hrefStyle}>Напишите мне на почту 
+
+   <WindowsFilled style={{
+    "fontSize" : 30,
+    "justifyContent": "center",
+    "marginLeft" : 10,
+    "marginRight" : 50,
+    }}/> 
+    </a>
+    <p style={hrefStyle}>@2025-2026 non trademarked cuz it's 4fun & demonstrate skills</p>
+  </Layout.Footer>;
 }

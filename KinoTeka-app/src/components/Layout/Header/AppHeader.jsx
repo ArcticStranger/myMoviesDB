@@ -14,7 +14,18 @@ export default function AppHeader() {
   const navigate = useNavigate();
 
   return (
-    <Layout.Header style={{ display: "flex", alignItems: "center" }}>
+    <Layout.Header
+      style={{
+        display: "flex",
+        alignItems: "center",
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        width: "100%",
+        zIndex: 1000,
+      }}
+    >
       <div className="demo-logo" />
       <SearchInput />
       <Button
