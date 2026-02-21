@@ -1,16 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { writeFavorites } from "../../../services/localStorage"
+import { setFavoriteFilm, getFavoriteFilms } from "../../../services/localStorage"
+
+
 const buttonSlice = createSlice({
   name: "button",
   initialState: {
     hasButtonTapped: false,
+    value: [],
   },
-
   reducers: {
     setButton(state, action) {
       state.hasButtonTapped = true;
-      writeFavorites(action.payload)
-      console.log("bruh");
+      state.value.push(action.payload); 
     },
   },
 });

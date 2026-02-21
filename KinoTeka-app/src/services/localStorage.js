@@ -1,7 +1,7 @@
 
 const FAVORITES_KEY = "favorite_films";
 
-function readFavorites() {
+export function readFavorites() {
   if (typeof window === "undefined") return [];
 
   try {
@@ -39,6 +39,7 @@ export function toggleFavoriteFilm(movie) {
   }
 
   writeFavorites([...favorites, movie]);
+
   return true;
 }
 

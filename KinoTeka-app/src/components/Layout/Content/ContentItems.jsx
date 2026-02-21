@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import "../../../styles/posterStyle.css";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { textStyle, filmCard } from "../../../styles/contentStyles";
-import { isFavoriteFilm, toggleFavoriteFilm } from "../../../services/localStorage";
+import { isFavoriteFilm, toggleFavoriteFilm, getFavoriteFilm } from "../../../services/localStorage";
+import { setButton } from "../../redux/partReducers/buttonSlice"
+import { useDispatch, useSelector } from "react-redux"
 
 const starStyle = {
   fontSize: 35,
@@ -13,8 +15,11 @@ const starStyle = {
 
 function FavoriteStarButton({ movie, ariaLabel }) {
   const [isFavorite, setIsFavorite] = useState(() => isFavoriteFilm(movie?.imdbID));
+  const dispatch = useDispatch();
+  const selector = useSelector((state) => state.button.value)
 
   const handleFavoriteClick = () => {
+    if (!movie?.imdbID) return;
     const next = toggleFavoriteFilm(movie);
     setIsFavorite(next);
   };
