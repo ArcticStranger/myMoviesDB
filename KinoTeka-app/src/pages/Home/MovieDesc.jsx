@@ -1,6 +1,8 @@
 import { Spin, Typography } from "antd";
 import { Link, useParams } from "react-router-dom";
 import { useGetFilmInfoById } from "../../hooks/useMovieInfo";
+import { useDispatch } from "react-redux";
+import { setDescriptionState } from "../../components/redux/partReducers/buttonSlice";
 
 const descriptionStyles = {
   display: "flex",
@@ -32,7 +34,9 @@ const descPosterStyle = {
 export default function MovieDescription({ search }) {
   const { imdbID } = useParams();
   const data = useGetFilmInfoById(imdbID);
+  const dispatch = useDispatch();
 
+  dispatch(setDescriptionState(true)); 
   if (!data) {
     return <Spin />;
   }

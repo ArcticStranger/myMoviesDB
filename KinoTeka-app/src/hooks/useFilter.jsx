@@ -28,11 +28,15 @@ export default function useFilter() {
 
   const onAlphabetSort = (checked) => {
     setAlphabet(checked);
+    if (checked) {
+      setYear(false);
+    }
   };
 
   const onYear = (checked) => {
     setYear(checked);
     if (checked) {
+      setAlphabet(false);
       setGenre(false);
       setKeyword(false);
       setSelectedGenre(null);

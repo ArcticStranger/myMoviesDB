@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import HomePage from "./pages/Home/home.jsx";
 import SearchPage from "./pages/Home/search.jsx";
 import MovieDescription from "./pages/Home/MovieDesc.jsx";
@@ -13,10 +13,12 @@ import useFilter from "./hooks/useFilter.jsx";
 import { contentStyle } from "./styles/contentStyles.jsx";
 const layoutStyle = { borderRadius: 8, overflow: "hidden" };
 
-
 function App() {
+  const location = useLocation();
   const search = useSearch();
   const filter = useFilter();
+  const isMovieDescriptionRoute = location.pathname.startsWith("/movie/");
+
   return (
     <Layout style={layoutStyle}>
       <AppHeader />
@@ -28,21 +30,24 @@ function App() {
               path="/main"
               element={<HomePage search={search} filterData={filter} />}
             />
+
              <Route
               path="/search"
               element={<SearchPage search={search} filterData={filter} />}
             />
-            <Route
+
+          <Route
               path="/movie/:imdbID"
               element={<MovieDescription search={search} />}
             />
+            
             <Route 
               path="/favorites"
-              element={<FavoriteList />}
+              element={<FavoriteList filterData={filter} />}
             />
           </Routes>
         </Layout.Content>
-        <AppSider filterData={filter} />
+        {!isMovieDescriptionRoute && <AppSider filterData={filter} />}
       </Layout>
       <AppFooter />
     </Layout>

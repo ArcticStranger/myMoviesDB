@@ -15,14 +15,28 @@ export default function AppContent({ database, filterData, forceFavorites = fals
   const showFavorites = forceFavorites || buttonTriggered;
 
   const datasearch = useGetFilmInfoBySearch(searchQuery);
+  const keyword = filterData?.keywordQuery?.trim().toLowerCase() || "";
+  const keywordForFilter = filterData?.keyword ? keyword : "";
+  const genreActive = filterData?.genre && !!filterData?.selectedGenre;
 
   if (showFavorites) {
+    const favoritesBase = genreActive
+      ? favorData.filter((movie) => movie.Genre?.includes(filterData.selectedGenre))
+      : favorData;
+
+    const sortedFavorites = sortingData({
+      year: filterData?.year,
+      alphabet: filterData?.alphabet,
+      database: favoritesBase,
+      keyword: keywordForFilter,
+    });
+
     const normalizedQuery = searchQuery?.trim().toLowerCase() || "";
     const filteredFavorites = hasSearched && normalizedQuery
-      ? favorData.filter((movie) =>
+      ? sortedFavorites.filter((movie) =>
           movie?.Title?.toLowerCase().includes(normalizedQuery)
         )
-      : favorData;
+      : sortedFavorites;
 
     return (
       <div style={filmsGrid}>
@@ -40,10 +54,6 @@ export default function AppContent({ database, filterData, forceFavorites = fals
   if (!database) return <Spin />;
   if (!database.length)
     return <Typography.Text>Не удалось загрузить фильмы</Typography.Text>;
-
-  const keyword = filterData?.keywordQuery?.trim().toLowerCase() || "";
-  const keywordForFilter = filterData?.keyword ? keyword : "";
-  const genreActive = filterData?.genre && !!filterData?.selectedGenre;
 
   const baseDatabase = genreActive
     ? database.filter((movie) => movie.Genre?.includes(filterData.selectedGenre))

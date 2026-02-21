@@ -8,6 +8,7 @@ import {
   Radio,
 } from "antd";
 
+
 const switchStyle = {
   transform: "scale(1.5)",
   marginTop: 15,
@@ -35,6 +36,7 @@ const genreOptions = [
 export default function AppSider({ filterData }) {
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState("right");
+
   const showDrawer = () => {
     setOpen(true);
   };
