@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { setFavoriteFilm, getFavoriteFilms } from "../../../services/localStorage"
 
 const buttonSlice = createSlice({
   name: "button",
@@ -14,7 +13,7 @@ const buttonSlice = createSlice({
     },
     clearButton(state) {
       state.hasButtonTapped = false;
-    }
+    },
   },
 });
 

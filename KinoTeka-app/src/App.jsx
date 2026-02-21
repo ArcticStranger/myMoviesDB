@@ -19,7 +19,7 @@ function App() {
   const filter = useFilter();
   return (
     <Layout style={layoutStyle}>
-      <AppHeader onSearch={search.onSearch} filterCheck={filter} />
+      <AppHeader />
       <Layout>
         <Layout.Content style={contentStyle}>
           <Routes>

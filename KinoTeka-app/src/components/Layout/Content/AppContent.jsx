@@ -7,13 +7,36 @@ import { useGetFilmInfoBySearch } from "../../../hooks/useMovieInfo";
 import sortingData from "../../../utils/sortingData";
 import { getFavoriteFilms } from "../../../services/localStorage";
 
-export default function AppContent({ database, filterData }) {
+export default function AppContent({ database, filterData, forceFavorites = false }) {
   const searchQuery = useSelector((state) => state.search.query);
   const hasSearched = useSelector((state) => state.search.hasSearched);
   const buttonTriggered = useSelector((state) => state.button.hasButtonTapped);
+  const favorData = getFavoriteFilms();
+  const showFavorites = forceFavorites || buttonTriggered;
 
   const datasearch = useGetFilmInfoBySearch(searchQuery);
-  // console.log(getFavoriteFilms());
+
+  if (showFavorites) {
+    const normalizedQuery = searchQuery?.trim().toLowerCase() || "";
+    const filteredFavorites = hasSearched && normalizedQuery
+      ? favorData.filter((movie) =>
+          movie?.Title?.toLowerCase().includes(normalizedQuery)
+        )
+      : favorData;
+
+    return (
+      <div style={filmsGrid}>
+        {filteredFavorites.length ? (
+          filteredFavorites.map((movie) => (
+            <FilmItem key={movie.imdbID || movie.Title} check={movie} />
+          ))
+        ) : (
+          <Typography.Text>Избранные фильмы не найдены</Typography.Text>
+        )}
+      </div>
+    );
+  }
+
   if (!database) return <Spin />;
   if (!database.length)
     return <Typography.Text>Не удалось загрузить фильмы</Typography.Text>;
@@ -46,26 +69,15 @@ export default function AppContent({ database, filterData }) {
     ? { ...datasearch, Search: sortedSearch }
     : datasearch;
 
-  const favorData = getFavoriteFilms();
-  console.log(favorData);
   return (
-    <>
-      <div style={filmsGrid}>
-        {hasSearched && searchQuery ? ( buttonTriggered ? 
-        favorData.map((movie) => (
-        <FilmItem key={movie.imdbID || movie.Title} check={movie}/> 
-        )) :
-          <FilmItemList searchData={searchData} />
-        ) : ( buttonTriggered ? 
-        favorData.map((movie) => (
-        <FilmItem key={movie.imdbID || movie.Title} check={movie}/> 
+    <div style={filmsGrid}>
+      {hasSearched && searchQuery ? (
+        <FilmItemList searchData={searchData} />
+      ) : (
+        sortedDatabase.map((movie) => (
+          <FilmItem key={movie.imdbID || movie.Title} check={movie} />
         ))
-        :
-          sortedDatabase.map((movie) => (
-            <FilmItem key={movie.imdbID || movie.Title} check={movie} />
-          ))
-        )}
-      </div>
-    </>
+      )}
+    </div>
   );
 }

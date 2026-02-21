@@ -48,7 +48,7 @@ export function FilmItem({ check }) {
       <div style={filmCard}>
         <Link to={`/movie/${check.imdbID}`} style={{ textDecoration: "none" }}>
           <img src={check.Poster} alt={check.Title} className="posterStyle"
-          onClick={navigate(`/movie/${check.imdbID}`)} />
+           />
         </Link>
         <Typography.Text style={textStyle}>
           Название: {check.Title}

@@ -15,7 +15,7 @@ export default function SearchInput() {
       placeholder="Введите название фильма"
       style={{ maxWidth: "30vh", marginRight: "3rem" }}
       onSearch={(value) => {
-        dispatch(clearButton(value));
+        dispatch(clearButton());
         dispatch(setQuery(value));
         navigate("/search");
       }}
