@@ -11,6 +11,7 @@ const filterSlice = createSlice({
     selectedGenre: null,
     keywordQuery: "",
     alphabetSort: false,
+    childRatingSort: false,
   },
   reducers: {
     checkYear() {
@@ -41,9 +42,11 @@ const filterSlice = createSlice({
       }
       else return;
     },
-   
+    setChildSort(state) {
+      state.childRatingSort = (state.childRatingSort ? false : true);
+    },
   },
 });
 
-export const { setYear, setGenre, setKeyword } = filterSlice.actions;
+export const { setYear, setGenre, setKeyword, setAlphabetSort, setChildSort } = filterSlice.actions;
 export default filterSlice.reducer;

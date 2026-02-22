@@ -9,7 +9,7 @@ import { setButton } from "../../redux/partReducers/buttonSlice"
 import { useDispatch, useSelector } from "react-redux"
 
 const starStyle = {
-  fontSize: 35,
+  fontSize: 25,
   color: "#ff0000",
 };
 
@@ -57,8 +57,9 @@ export function FilmItem({ check }) {
           <br />
           Жанр: {check.Genre}
           <br />
-        </Typography.Text>
+        Добавить в избранное
         <FavoriteStarButton movie={check} ariaLabel="toggle-favorite" />
+          </Typography.Text>
       </div>
     </div>
   );

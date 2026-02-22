@@ -23,7 +23,7 @@ export const filmCard = {
   gap: "8px",
   backgroundColor: "#bccd28",
   width: 300,
-  minHeight: 580,
+  minHeight: 700,
   borderRadius: 20,
 };
 

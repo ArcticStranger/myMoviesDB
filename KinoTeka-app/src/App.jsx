@@ -9,7 +9,6 @@ import AppFooter from "./components/Layout/Footer/AppFooter";
 import { Layout } from "antd";
 import useSearch from "./hooks/useSearch";
 import useFilter from "./hooks/useFilter.jsx";
-
 import { contentStyle } from "./styles/contentStyles.jsx";
 const layoutStyle = { borderRadius: 8, overflow: "hidden" };
 
@@ -28,12 +27,12 @@ function App() {
           <Route path="/" element={<Navigate to="/main" replace />}/>
             <Route
               path="/main"
-              element={<HomePage search={search} filterData={filter} />}
+              element={<HomePage search={search}  />}
             />
 
              <Route
               path="/search"
-              element={<SearchPage search={search} filterData={filter} />}
+              element={<SearchPage search={search} />}
             />
 
           <Route

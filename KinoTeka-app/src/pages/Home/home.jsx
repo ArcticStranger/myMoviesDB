@@ -12,7 +12,7 @@ export const defaultMovies = [
   "Pacific Rim",
 ];
 
-export default function HomePage({ filterData }) {
+export default function HomePage() {
   const def = useGetFilmInfoDefaults(defaultMovies);
-  return <AppContent database={def} filterData={filterData} />;
+  return <AppContent database={def} />;
 }

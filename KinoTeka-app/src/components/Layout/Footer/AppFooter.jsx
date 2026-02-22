@@ -41,6 +41,6 @@ export default function AppFooter() {
     "marginRight" : 50,
     }}/> 
     </a>
-    <p style={hrefStyle}>@2025-2026 non trademarked cuz it's 4fun & demonstrate skills</p>
+    <p style={hrefStyle}>@2025-2026 non-trademarked, cuz it's 4fun & demonstrate skills ;D</p>
   </Layout.Footer>;
 }

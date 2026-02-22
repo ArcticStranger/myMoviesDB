@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import {
   Layout,
   Space,
@@ -7,7 +8,6 @@ import {
   Input,
   Radio,
 } from "antd";
-
 
 const switchStyle = {
   transform: "scale(1.5)",
@@ -33,19 +33,23 @@ const genreOptions = [
   { value: "Sci-Fi", label: "Sci-Fi" },
 ];
 
-export default function AppSider({ filterData }) {
-  const [open, setOpen] = useState(false);
-  const [placement, setPlacement] = useState("right");
 
-  const showDrawer = () => {
-    setOpen(true);
+export default function AppSider({ filterData }) {
+  const [radioValue, setRadioValue] = useState(1);
+  const onRadioChange = (e) => {
+    const selected = e.target.value;
+    setRadioValue(e.target.value);
+
+    if (selected === "HighRating") {
+
+    } else if (selected === "ZeroAdult") {
+
+    } else if (selected === "RussianLang") {
+      
+    }
   };
-  const onChange = (e) => {
-    setPlacement(e.target.value);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
+
+  
 
   return (
     <Layout.Sider width="25%" style={siderStyle}>
@@ -108,11 +112,16 @@ export default function AppSider({ filterData }) {
       </Space>
 
       <Space>
-        <Radio.Group value={placement} onChange={onChange}>
-          <Radio value="top">На русском языке</Radio>
-          <Radio value="right">Для детей</Radio>
-          <Radio value="bottom">С рейтингом 4 и выше</Radio>
-        </Radio.Group>
+        <Radio.Group
+          name="radiogroup"
+          value={radioValue}
+          onChange={onRadioChange}
+          options={[
+            { value: "HighRating", label: 'С рейтингом 4 и выше' },
+            { value: "ZeroAdult", label: 'Для детей (до 12+)' },
+            { value: "RussianLang", label: 'Есть русский язык' },
+          ]}
+        />
       </Space>
     </Layout.Sider>
   );

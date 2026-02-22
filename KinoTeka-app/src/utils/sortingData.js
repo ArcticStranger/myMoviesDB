@@ -10,6 +10,7 @@ export default function sortingData({year, alphabet, database, keyword}) {
 
   const byYear = (a, b) => parseYear(a.Year) - parseYear(b.Year);
 
+
   const byTitleAsc = (a, b) => {
     const titleA = String(a?.Title ?? "");
     const titleB = String(b?.Title ?? "");
@@ -27,6 +28,7 @@ export default function sortingData({year, alphabet, database, keyword}) {
     }
     return 0;
   }
+
   const keywordValue = String(keyword ?? "").toLowerCase();
   const matchesKeyword = (movie) => {
     if (!keywordValue) return true;
