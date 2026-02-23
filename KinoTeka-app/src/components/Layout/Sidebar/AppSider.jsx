@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
-  Layout,
-  Space,
-  Switch,
-  Select,
-  Input,
-  Radio,
-} from "antd";
+  setGenre,
+  setYear,
+  setKeyword,
+  setKeywordQuery,
+  setGenreQuery,
+  setAlphabetSort,
+} from "../../redux/partReducers/filterSlice";
+
+import { Layout, Space, Switch, Select, Input, Radio } from "antd";
 
 const switchStyle = {
   transform: "scale(1.5)",
@@ -33,23 +36,26 @@ const genreOptions = [
   { value: "Sci-Fi", label: "Sci-Fi" },
 ];
 
-
-export default function AppSider({ filterData }) {
+export default function AppSider() {
   const [radioValue, setRadioValue] = useState(1);
   const onRadioChange = (e) => {
     const selected = e.target.value;
     setRadioValue(e.target.value);
 
     if (selected === "HighRating") {
-
     } else if (selected === "ZeroAdult") {
-
     } else if (selected === "RussianLang") {
-      
     }
   };
 
-  
+  const genre = useSelector((state) => state.filter.genre);
+  const selectedGenre = useSelector((state) => state.filter.selectedGenre);
+  const year = useSelector((state) => state.filter.year);
+  const keyword = useSelector((state) => state.filter.keyword);
+  const keywordQuery = useSelector((state) => state.filter.keywordQuery);
+  const alphabetSort = useSelector((state) => state.filter.alphabetSort);
+
+  const dispatch = useDispatch();
 
   return (
     <Layout.Sider width="25%" style={siderStyle}>
@@ -64,14 +70,14 @@ export default function AppSider({ filterData }) {
         <Switch
           checkedChildren="Поиск по жанру"
           unCheckedChildren="Поиск по жанру"
-          checked={filterData.genre}
-          onChange={(checked) => filterData.onGenre(checked)}
+          checked={genre}
+          onChange={(checked) => dispatch(setGenre(checked))}
           style={switchStyle}
         />
-        {filterData.genre && (
+        {genre && (
           <Select
-            value={filterData.selectedGenre}
-            onChange={filterData.onGenreChange}
+            value={selectedGenre}
+            onChange={(value) => dispatch(setGenreQuery(value))}
             options={genreOptions}
             placeholder="Выбрать жанр"
             style={{ width: 240 }}
@@ -81,21 +87,21 @@ export default function AppSider({ filterData }) {
         <Switch
           checkedChildren="Сортировка по годам вкл."
           unCheckedChildren="Сортировка по годам откл."
-          checked={filterData.year}
-          onChange={(checked) => filterData.onYear(checked)}
+          checked={year}
+          onChange={(checked) => dispatch(setYear(checked))}
           style={switchStyle}
         />
         <Switch
           checkedChildren="Поиск по ключевым словам"
           unCheckedChildren="Поиск по ключевым словам"
-          checked={filterData.keyword}
-          onChange={(checked) => filterData.onKeyword(checked)}
+          checked={keyword}
+          onChange={(checked) => dispatch(setKeyword(checked))}
           style={switchStyle}
         />
-         {filterData.keyword && (
+        {keyword && (
           <Input
-            value={filterData.keywordQuery}
-            onChange={(e) => filterData.onKeywordChange(e.target.value)}
+            value={keywordQuery}
+            onChange={(e) => dispatch(setKeywordQuery(e.target.value))}
             placeholder="Ключевое слово"
             style={{ width: 240 }}
             allowClear
@@ -104,11 +110,10 @@ export default function AppSider({ filterData }) {
         <Switch
           checkedChildren="Сортировка по алфавиту вкл. (A-Z)"
           unCheckedChildren="Сортировка по алфавиту откл."
-          checked={filterData.alphabet}
-          onChange={(checked) => filterData.onAlphabetSort(checked)}
+          checked={alphabetSort}
+          onChange={(checked) => dispatch(setAlphabetSort(checked))}
           style={switchStyle}
         />
-       
       </Space>
 
       <Space>
@@ -117,9 +122,9 @@ export default function AppSider({ filterData }) {
           value={radioValue}
           onChange={onRadioChange}
           options={[
-            { value: "HighRating", label: 'С рейтингом 4 и выше' },
-            { value: "ZeroAdult", label: 'Для детей (до 12+)' },
-            { value: "RussianLang", label: 'Есть русский язык' },
+            { value: "HighRating", label: "С рейтингом 4 и выше" },
+            { value: "ZeroAdult", label: "Для детей (до 12+)" },
+            { value: "RussianLang", label: "Есть русский язык" },
           ]}
         />
       </Space>

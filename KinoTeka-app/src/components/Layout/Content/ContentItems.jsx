@@ -4,9 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../../styles/posterStyle.css";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { textStyle, filmCard } from "../../../styles/contentStyles";
-import { isFavoriteFilm, toggleFavoriteFilm, getFavoriteFilm } from "../../../services/localStorage";
-import { setButton } from "../../redux/partReducers/buttonSlice"
-import { useDispatch, useSelector } from "react-redux"
+import {
+  isFavoriteFilm,
+  toggleFavoriteFilm,
+  getFavoriteFilm,
+} from "../../../services/localStorage";
+import { setButton } from "../../redux/partReducers/buttonSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const starStyle = {
   fontSize: 25,
@@ -14,9 +18,11 @@ const starStyle = {
 };
 
 function FavoriteStarButton({ movie, ariaLabel }) {
-  const [isFavorite, setIsFavorite] = useState(() => isFavoriteFilm(movie?.imdbID));
+  const [isFavorite, setIsFavorite] = useState(() =>
+    isFavoriteFilm(movie?.imdbID)
+  );
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state.button.value)
+  const selector = useSelector((state) => state.button.value);
 
   const handleFavoriteClick = () => {
     if (!movie?.imdbID) return;
@@ -29,7 +35,13 @@ function FavoriteStarButton({ movie, ariaLabel }) {
       type="text"
       aria-label={ariaLabel}
       onClick={handleFavoriteClick}
-      icon={isFavorite ? <StarFilled style={starStyle} /> : <StarOutlined style={starStyle} />}
+      icon={
+        isFavorite ? (
+          <StarFilled style={starStyle} />
+        ) : (
+          <StarOutlined style={starStyle} />
+        )
+      }
     />
   );
 }
@@ -47,8 +59,7 @@ export function FilmItem({ check }) {
     >
       <div style={filmCard}>
         <Link to={`/movie/${check.imdbID}`} style={{ textDecoration: "none" }}>
-          <img src={check.Poster} alt={check.Title} className="posterStyle"
-           />
+          <img src={check.Poster} alt={check.Title} className="posterStyle" />
         </Link>
         <Typography.Text style={textStyle}>
           Название: {check.Title}
@@ -57,9 +68,9 @@ export function FilmItem({ check }) {
           <br />
           Жанр: {check.Genre}
           <br />
-        Добавить в избранное
-        <FavoriteStarButton movie={check} ariaLabel="toggle-favorite" />
-          </Typography.Text>
+          Добавить в избранное
+          <FavoriteStarButton movie={check} ariaLabel="toggle-favorite" />
+        </Typography.Text>
       </div>
     </div>
   );

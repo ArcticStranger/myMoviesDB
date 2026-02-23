@@ -2,12 +2,17 @@ import { Layout } from "antd";
 import { GithubOutlined, WindowsFilled } from "@ant-design/icons";
 
 const footerStyle = {
-  
   display: "flex",
   textAlign: "start",
   fontSize: "20px",
   color: "#fff",
   backgroundColor: "#000000",
+  position: "fixed",
+  left: 0,
+  right: 0,
+  bottom: 0,
+  width: "100%",
+  zIndex: 1000,
 };
 
 const hrefStyle = {
@@ -15,32 +20,37 @@ const hrefStyle = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-}
+};
 
 export default function AppFooter() {
-  return <Layout.Footer style={footerStyle}>
- 
-  <a href="https://github.com/ArcticStranger"
-  style={hrefStyle}>Мой Github
+  return (
+    <Layout.Footer style={footerStyle}>
+      <a href="https://github.com/ArcticStranger" style={hrefStyle}>
+        Мой Github
+        <GithubOutlined
+          style={{
+            fontSize: 30,
+            justifyContent: "center",
+            marginLeft: 10,
+            marginRight: 40,
+          }}
+        />
+      </a>
 
-   <GithubOutlined style={{
-    "fontSize" : 30,
-    "justifyContent": "center",
-    "marginLeft" : 10,
-    "marginRight" : 40,
-    }}/> 
-    </a>
-
-      <a href="mailto:atlasovtimofey@hotmail.com"
-  style={hrefStyle}>Напишите мне на почту 
-
-   <WindowsFilled style={{
-    "fontSize" : 30,
-    "justifyContent": "center",
-    "marginLeft" : 10,
-    "marginRight" : 50,
-    }}/> 
-    </a>
-    <p style={hrefStyle}>@2025-2026 non-trademarked, cuz it's 4fun & demonstrate skills ;D</p>
-  </Layout.Footer>;
+      <a href="mailto:atlasovtimofey@hotmail.com" style={hrefStyle}>
+        Напишите мне на почту
+        <WindowsFilled
+          style={{
+            fontSize: 30,
+            justifyContent: "center",
+            marginLeft: 10,
+            marginRight: 50,
+          }}
+        />
+      </a>
+      <p style={hrefStyle}>
+        @2025-2026 non-trademarked, cuz it's 4fun & demonstrate skills ;D
+      </p>
+    </Layout.Footer>
+  );
 }

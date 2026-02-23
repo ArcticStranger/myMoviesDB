@@ -10,20 +10,21 @@ const buttonSlice = createSlice({
   reducers: {
     setButton(state, action) {
       state.hasButtonTapped = true;
-      state.value.push(action.payload); 
+      state.value.push(action.payload);
     },
     clearButton(state) {
       state.hasButtonTapped = false;
     },
     setDescriptionState(state) {
-      state.movieDescOpened = (false ? true : false);
+      state.movieDescOpened = false ? true : false;
     },
     checkDescState() {
       return state.movieDescOpened;
-    }
+    },
   },
 });
 
-export const { setButton, clearButton, setDescriptionState, checkDescState } = buttonSlice.actions;
+export const { setButton, clearButton, setDescriptionState, checkDescState } =
+  buttonSlice.actions;
 
 export default buttonSlice.reducer;

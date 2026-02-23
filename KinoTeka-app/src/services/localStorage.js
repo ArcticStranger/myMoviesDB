@@ -1,4 +1,3 @@
-
 const FAVORITES_KEY = "favorite_films";
 
 export function readFavorites() {
@@ -36,8 +35,8 @@ export function toggleFavoriteFilm(movie) {
   if (exists) {
     const check = window.confirm("Вы точно хотите удалить из избранного?");
     if (check === true) {
-    writeFavorites(favorites.filter((item) => item.imdbID !== movie.imdbID));
-    return false;
+      writeFavorites(favorites.filter((item) => item.imdbID !== movie.imdbID));
+      return false;
     } else return true;
   }
 

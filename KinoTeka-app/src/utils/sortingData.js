@@ -1,6 +1,4 @@
-
-
-export default function sortingData({year, alphabet, database, keyword}) {
+export default function sortingData({ year, alphabet, database, keyword }) {
   if (!Array.isArray(database)) return [];
 
   const parseYear = (value) => {
@@ -9,7 +7,6 @@ export default function sortingData({year, alphabet, database, keyword}) {
   };
 
   const byYear = (a, b) => parseYear(a.Year) - parseYear(b.Year);
-
 
   const byTitleAsc = (a, b) => {
     const titleA = String(a?.Title ?? "");
@@ -21,13 +18,13 @@ export default function sortingData({year, alphabet, database, keyword}) {
     if (year) {
       const y = byYear(a, b);
       if (y !== 0) return y;
-    } 
+    }
     if (alphabet) {
       const t = byTitleAsc(a, b);
       if (t !== 0) return t;
     }
     return 0;
-  }
+  };
 
   const keywordValue = String(keyword ?? "").toLowerCase();
   const matchesKeyword = (movie) => {
@@ -46,9 +43,7 @@ export default function sortingData({year, alphabet, database, keyword}) {
   });
 
   const sortedDatabase =
-  year || alphabet
-    ? [...baseDatabase].sort(combinedSort)
-    : baseDatabase;
+    year || alphabet ? [...baseDatabase].sort(combinedSort) : baseDatabase;
 
   return sortedDatabase;
- }
+}

@@ -5,9 +5,9 @@ export default function UseButton() {
 
   const onButton = (value) => {
     setButtonState(value);
-  }
+  };
 
   return {
     buttonState,
-  }
+  };
 }

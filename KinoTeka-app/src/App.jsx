@@ -7,15 +7,11 @@ import AppHeader from "./components/Layout/Header/AppHeader";
 import AppSider from "./components/Layout/Sidebar/AppSider";
 import AppFooter from "./components/Layout/Footer/AppFooter";
 import { Layout } from "antd";
-import useSearch from "./hooks/useSearch";
-import useFilter from "./hooks/useFilter.jsx";
 import { contentStyle } from "./styles/contentStyles.jsx";
 const layoutStyle = { borderRadius: 8, overflow: "hidden" };
 
 function App() {
   const location = useLocation();
-  const search = useSearch();
-  const filter = useFilter();
   const isMovieDescriptionRoute = location.pathname.startsWith("/movie/");
 
   return (
@@ -24,29 +20,17 @@ function App() {
       <Layout style={{ marginTop: 64 }}>
         <Layout.Content style={contentStyle}>
           <Routes>
-          <Route path="/" element={<Navigate to="/main" replace />}/>
-            <Route
-              path="/main"
-              element={<HomePage search={search}  />}
-            />
+            <Route path="/" element={<Navigate to="/main" replace />} />
+            <Route path="/main" element={<HomePage />} />
 
-             <Route
-              path="/search"
-              element={<SearchPage search={search} />}
-            />
+            <Route path="/search" element={<SearchPage />} />
 
-          <Route
-              path="/movie/:imdbID"
-              element={<MovieDescription search={search} />}
-            />
-            
-            <Route 
-              path="/favorites"
-              element={<FavoriteList filterData={filter} />}
-            />
+            <Route path="/movie/:imdbID" element={<MovieDescription />} />
+
+            <Route path="/favorites" element={<FavoriteList />} />
           </Routes>
         </Layout.Content>
-        {!isMovieDescriptionRoute && <AppSider filterData={filter} />}
+        {!isMovieDescriptionRoute && <AppSider />}
       </Layout>
       <AppFooter />
     </Layout>

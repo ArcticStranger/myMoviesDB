@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import searchSlice from "./partReducers/searchSlice.js"
-import filterSlice from "./partReducers/filterSlice.js"
-import buttonSlice from "./partReducers/buttonSlice.js"
+import searchSlice from "./partReducers/searchSlice.js";
+import filterSlice from "./partReducers/filterSlice.js";
+import buttonSlice from "./partReducers/buttonSlice.js";
 
 export const store = configureStore({
   reducer: {
@@ -9,4 +9,4 @@ export const store = configureStore({
     filter: filterSlice,
     button: buttonSlice,
   },
-})
+});

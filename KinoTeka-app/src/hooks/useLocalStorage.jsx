@@ -3,8 +3,7 @@ import { getFavoriteFilm, setFavoriteFilm } from "../services/localStorage";
 
 export default function useLocalStorage() {
   const [storage, setStorage] = useState(null);
-  const [isEdited, setIsEdited] = useState(false); 
-  
+  const [isEdited, setIsEdited] = useState(false);
 
   let check;
 
@@ -19,6 +18,5 @@ export default function useLocalStorage() {
     storage,
     isEdited,
     check,
-  }
-
+  };
 }

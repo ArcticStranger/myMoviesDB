@@ -17,12 +17,14 @@ export default function AppContent({ database, forceFavorites = false }) {
   const filter_keywordQuery = useSelector((state) => state.filter.keywordQuery);
   const filter_keyword = useSelector((state) => state.filter.keyword);
   const filter_genre = useSelector((state) => state.filter.genre);
-  const filter_selectedGenre = useSelector((state) => state.filter.selectedGenre);
+  const filter_selectedGenre = useSelector(
+    (state) => state.filter.selectedGenre
+  );
   const filter_year = useSelector((state) => state.filter.year);
-  const filter_yearQuery = useSelector((state) => state.filter.yearQuery);
   const filter_alphabetSort = useSelector((state) => state.filter.alphabetSort);
-  const filter_childRatingSort = useSelector((state) => state.filter.childRatingSort);
-
+  const filter_childRatingSort = useSelector(
+    (state) => state.filter.childRatingSort
+  );
 
   const datasearch = useGetFilmInfoBySearch(searchQuery);
   const keyword = filter_keywordQuery?.trim().toLowerCase() || "";
@@ -42,11 +44,12 @@ export default function AppContent({ database, forceFavorites = false }) {
     });
 
     const normalizedQuery = searchQuery?.trim().toLowerCase() || "";
-    const filteredFavorites = hasSearched && normalizedQuery
-      ? sortedFavorites.filter((movie) =>
-          movie?.Title?.toLowerCase().includes(normalizedQuery)
-        )
-      : sortedFavorites;
+    const filteredFavorites =
+      hasSearched && normalizedQuery
+        ? sortedFavorites.filter((movie) =>
+            movie?.Title?.toLowerCase().includes(normalizedQuery)
+          )
+        : sortedFavorites;
 
     return (
       <div style={filmsGrid}>

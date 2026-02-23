@@ -10,6 +10,18 @@ export const defaultMovies = [
   "Jobs",
   "Chappie",
   "Pacific Rim",
+  "All Quiet on the Western Front",
+  "Oldboy",
+  "Rush Hour",
+  "The Wild Robot",
+  "Kung Fury",
+  "Astartes",
+  "The Hobbit: The Battle of the Five Armies",
+  "The Intouchables",
+  "TRON: Legacy",
+  "Puss in Boots: The Last Wish",
+  "1917",
+  "Bridge of Spies",
 ];
 
 export default function HomePage() {

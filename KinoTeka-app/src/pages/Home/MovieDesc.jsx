@@ -31,12 +31,12 @@ const descPosterStyle = {
   transform: "scale(1)",
 };
 
-export default function MovieDescription({ search }) {
+export default function MovieDescription() {
   const { imdbID } = useParams();
   const data = useGetFilmInfoById(imdbID);
   const dispatch = useDispatch();
 
-  dispatch(setDescriptionState(true)); 
+  dispatch(setDescriptionState(true));
   if (!data) {
     return <Spin />;
   }

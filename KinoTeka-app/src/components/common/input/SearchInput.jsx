@@ -1,11 +1,10 @@
 import { Input } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setQuery } from "../../redux/partReducers/searchSlice"
-import { clearButton } from "../../redux/partReducers/buttonSlice"
+import { setQuery } from "../../redux/partReducers/searchSlice";
+import { clearButton } from "../../redux/partReducers/buttonSlice";
 
 const { Search } = Input;
-
 
 export default function SearchInput() {
   const dispatch = useDispatch();
@@ -20,7 +19,6 @@ export default function SearchInput() {
         navigate("/search");
       }}
       size="large"
-
       enterButton
     />
   );
