@@ -9,7 +9,7 @@ const filterSlice = createSlice({
     selectedGenre: null,
     keywordQuery: "",
     alphabetSort: false,
-    childRatingSort: false,
+    radioFilter: null,
   },
   reducers: {
     setYear(state) {
@@ -40,8 +40,8 @@ const filterSlice = createSlice({
       state.alphabetSort = state.alphabetSort ? false : true;
       state.year = state.year ? false : state.year;
     },
-    setChildSort(state) {
-      state.childRatingSort = state.childRatingSort ? false : true;
+    setRadioFilter(state, action) {
+      state.radioFilter = action.payload ?? null;
     },
   },
 });
@@ -53,6 +53,6 @@ export const {
   setKeyword,
   setKeywordQuery,
   setAlphabetSort,
-  setChildSort,
+  setRadioFilter,
 } = filterSlice.actions;
 export default filterSlice.reducer;

@@ -1,5 +1,6 @@
-import { Layout, Button } from "antd";
+import { Layout, Button, Switch } from "antd";
 import { HeartTwoTone } from "@ant-design/icons";
+import { MenuOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { clearButton } from "../../redux/partReducers/buttonSlice";
 import { clearQuery } from "../../redux/partReducers/searchSlice";
@@ -9,9 +10,15 @@ import SearchInput from "../../common/input/SearchInput.jsx";
 import { useDispatch } from "react-redux";
 import { setButton } from "../../redux/partReducers/buttonSlice";
 
-export default function AppHeader() {
+export default function AppHeader({
+  isBurgerMode,
+  onSetSiderMode,
+  onOpenBurger,
+  canUseSider,
+}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const canOpenBurger = canUseSider && isBurgerMode;
 
   return (
     <Layout.Header
@@ -28,6 +35,41 @@ export default function AppHeader() {
     >
       <div className="demo-logo" />
       <SearchInput />
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          marginRight: 12,
+          opacity: canUseSider ? 1 : 0.7,
+        }}
+      >
+        <Switch
+          checked={isBurgerMode}
+          onChange={(checked) => onSetSiderMode(checked)}
+          disabled={!canUseSider}
+        />
+        <span style={{ color: "#fff", whiteSpace: "nowrap", fontSize: 14 }}>
+          {isBurgerMode ? "Бургер-режим вкл." : "Бургер-режим откл."}
+        </span>
+      </div>
+      <Button
+        icon={<MenuOutlined />}
+        style={{
+          marginRight: 12,
+          background: canOpenBurger ? "#fff" : "#f2f2f2",
+          borderColor: canOpenBurger ? undefined : "#d9d9d9",
+          color: canOpenBurger ? undefined : "#777",
+          opacity: canOpenBurger ? 1 : 0.9,
+          cursor: canOpenBurger ? "pointer" : "not-allowed",
+        }}
+        onClick={() => {
+          if (canOpenBurger) onOpenBurger();
+        }}
+        aria-disabled={!canOpenBurger}
+      >
+        Фильтры
+      </Button>
       <Button
         type="primary"
         onClick={() => {
@@ -44,6 +86,7 @@ export default function AppHeader() {
         }
         style={{ marginLeft: 30 }}
         onClick={() => {
+          dispatch(clearQuery());
           dispatch(setButton(true));
           navigate("/favorites");
         }}

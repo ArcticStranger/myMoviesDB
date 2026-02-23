@@ -6,18 +6,55 @@ import { textStyle, filmCard } from "../styles/contentStyles";
 
 export function useGetFilmInfoBySearch(filmName) {
   const [data, setData] = useState(null);
+
   useEffect(() => {
+    const abortController = new AbortController();
+
     if (!filmName) {
       setData(null);
-      return;
+    } else {
+      async function loadSearchWithDetails() {
+        try {
+          const searchResponse = await fetch(
+            `${import.meta.env.VITE_FILMDATA_SRC}?apikey=${import.meta.env.VITE_API_KEY}&s=${encodeURIComponent(filmName)}`,
+            { signal: abortController.signal }
+          );
+          const searchData = await searchResponse.json();
+
+          if (!Array.isArray(searchData?.Search)) {
+            setData(searchData);
+          } else {
+            const detailedResults = await Promise.allSettled(
+              searchData.Search.map((movie) =>
+                fetch(
+                  `${import.meta.env.VITE_FILMDATA_SRC}?apikey=${import.meta.env.VITE_API_KEY}&i=${movie.imdbID}`,
+                  { signal: abortController.signal }
+                ).then((value) => value.json())
+              )
+            );
+
+            const detailedSearch = detailedResults.map((result, index) => {
+              if (result.status === "fulfilled" && result.value?.Response !== "False") {
+                return result.value;
+              }
+              return searchData.Search[index];
+            });
+
+            setData({ ...searchData, Search: detailedSearch });
+          }
+        } catch (error) {
+          if (error?.name !== "AbortError") {
+            setData({ Search: [] });
+          }
+        }
+      }
+
+      loadSearchWithDetails();
     }
-    fetch(
-      `${import.meta.env.VITE_FILMDATA_SRC}?apikey=${import.meta.env.VITE_API_KEY}&s=${encodeURIComponent(filmName)}`
-    )
-      .then((value) => value.json())
-      .then((value) => setData(value))
-      .catch(() => setData({ Search: [] }));
+
+    return () => abortController.abort();
   }, [filmName]);
+
   return data;
 }
 

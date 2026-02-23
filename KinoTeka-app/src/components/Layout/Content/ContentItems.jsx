@@ -102,7 +102,7 @@ export function FilmItemList({ searchData }) {
           <br />
         </Typography.Text>
         <FavoriteStarButton
-          movie={{ Title, Year, Type, Poster, imdbID }}
+          movie={movie}
           ariaLabel="toggle-favorite-search"
         />
       </div>

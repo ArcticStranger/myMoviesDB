@@ -36,9 +36,6 @@ export default function sortingData({ year, alphabet, database, keyword }) {
   };
 
   const baseDatabase = database.filter((movie) => {
-    // if (genreActive && !movie.Genre?.includes(filterData.selectedGenre)) {
-    //   return false;
-    // }
     return matchesKeyword(movie);
   });
 

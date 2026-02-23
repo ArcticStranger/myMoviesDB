@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -8,6 +7,7 @@ import {
   setKeywordQuery,
   setGenreQuery,
   setAlphabetSort,
+  setRadioFilter,
 } from "../../redux/partReducers/filterSlice";
 
 import { Layout, Space, Switch, Select, Input, Radio } from "antd";
@@ -36,16 +36,12 @@ const genreOptions = [
   { value: "Sci-Fi", label: "Sci-Fi" },
 ];
 
-export default function AppSider() {
-  const [radioValue, setRadioValue] = useState(1);
-  const onRadioChange = (e) => {
-    const selected = e.target.value;
-    setRadioValue(e.target.value);
+export default function AppSider({ asPanel = false }) {
+  const radioFilter = useSelector((state) => state.filter.radioFilter);
+  const dispatch = useDispatch();
 
-    if (selected === "HighRating") {
-    } else if (selected === "ZeroAdult") {
-    } else if (selected === "RussianLang") {
-    }
+  const onRadioClick = (value) => {
+    dispatch(setRadioFilter(radioFilter === value ? null : value));
   };
 
   const genre = useSelector((state) => state.filter.genre);
@@ -55,15 +51,25 @@ export default function AppSider() {
   const keywordQuery = useSelector((state) => state.filter.keywordQuery);
   const alphabetSort = useSelector((state) => state.filter.alphabetSort);
 
-  const dispatch = useDispatch();
+  const panelContainerStyle = {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    textAlign: "center",
+    gap: 16,
+    paddingTop: 8,
+  };
 
-  return (
-    <Layout.Sider width="25%" style={siderStyle}>
+  const filtersContent = (
+    <>
       <Space
         vertical
         style={{
           marginTop: 20,
           width: "100%",
+          display: "flex",
+          alignItems: "center",
           marginBottom: 20,
         }}
       >
@@ -115,19 +121,27 @@ export default function AppSider() {
           style={switchStyle}
         />
       </Space>
-
       <Space>
-        <Radio.Group
-          name="radiogroup"
-          value={radioValue}
-          onChange={onRadioChange}
-          options={[
-            { value: "HighRating", label: "С рейтингом 4 и выше" },
-            { value: "ZeroAdult", label: "Для детей (до 12+)" },
-            { value: "RussianLang", label: "Есть русский язык" },
-          ]}
-        />
+        <Radio.Group name="radiogroup" value={radioFilter}>
+          <Space direction="vertical">
+            <Radio value="HighRating" onClick={() => onRadioClick("HighRating")}>
+              С рейтингом 4 и выше
+            </Radio>
+            <Radio value="ZeroAdult" onClick={() => onRadioClick("ZeroAdult")}>
+              Для детей (до 12+)
+            </Radio>
+            <Radio value="RussianLang" onClick={() => onRadioClick("RussianLang")}>
+              Есть русский язык
+            </Radio>
+          </Space>
+        </Radio.Group>
       </Space>
-    </Layout.Sider>
+    </>
   );
+
+  if (asPanel) {
+    return <div style={panelContainerStyle}>{filtersContent}</div>;
+  }
+
+  return <Layout.Sider width="25%" style={siderStyle}>{filtersContent}</Layout.Sider>;
 }

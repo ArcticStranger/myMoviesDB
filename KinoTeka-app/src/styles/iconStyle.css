@@ -3,6 +3,6 @@
   color: #ff0000;
 }
 
-.starIcon::hover {
-  color: #52c41a;
+.starIcon:hover {
+  color: #1a23c4;
 }
