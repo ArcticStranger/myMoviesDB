@@ -4,6 +4,11 @@ import "../styles/posterStyle.css";
 
 import { textStyle, filmCard } from "../styles/contentStyles";
 
+const OMDB_URL = import.meta.env.VITE_FILMDATA_SRC;
+const OMDB_KEY = import.meta.env.VITE_API_KEY;
+const makeOmdbUrl = (params) =>
+  `${OMDB_URL}?${new URLSearchParams({ apikey: OMDB_KEY, ...params }).toString()}`;
+
 export function useGetFilmInfoBySearch(filmName) {
   const [data, setData] = useState(null);
 
@@ -16,7 +21,7 @@ export function useGetFilmInfoBySearch(filmName) {
       async function loadSearchWithDetails() {
         try {
           const searchResponse = await fetch(
-            `${import.meta.env.VITE_FILMDATA_SRC}?apikey=${import.meta.env.VITE_API_KEY}&s=${encodeURIComponent(filmName)}`,
+            makeOmdbUrl({ s: filmName }),
             { signal: abortController.signal }
           );
           const searchData = await searchResponse.json();
@@ -27,7 +32,7 @@ export function useGetFilmInfoBySearch(filmName) {
             const detailedResults = await Promise.allSettled(
               searchData.Search.map((movie) =>
                 fetch(
-                  `${import.meta.env.VITE_FILMDATA_SRC}?apikey=${import.meta.env.VITE_API_KEY}&i=${movie.imdbID}`,
+                  makeOmdbUrl({ i: movie.imdbID }),
                   { signal: abortController.signal }
                 ).then((value) => value.json())
               )
@@ -68,7 +73,7 @@ export function useGetFilmInfoDefaults(filmNames = []) {
     Promise.allSettled(
       filmNames.map((filmName) =>
         fetch(
-          `${import.meta.env.VITE_FILMDATA_SRC}?apikey=${import.meta.env.VITE_API_KEY}&t=${encodeURIComponent(filmName)}`
+          makeOmdbUrl({ t: filmName })
         ).then((value) => value.json())
       )
     ).then((results) => {
@@ -90,7 +95,7 @@ export function useGetFilmInfoById(imdbID) {
       return;
     }
     fetch(
-      `${import.meta.env.VITE_FILMDATA_SRC}?apikey=${import.meta.env.VITE_API_KEY}&i=${imdbID}&plot=full`
+   makeOmdbUrl({ i: imdbID, plot: "full" })
     )
       .then((value) => value.json())
       .then((value) => setData(value));

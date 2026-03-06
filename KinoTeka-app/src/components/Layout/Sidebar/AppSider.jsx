@@ -11,30 +11,12 @@ import {
 } from "../../redux/partReducers/filterSlice";
 
 import { Layout, Space, Switch, Select, Input, Radio } from "antd";
-
-const switchStyle = {
-  transform: "scale(1.5)",
-  marginTop: 15,
-  minWidth: 250,
-};
-
-const siderStyle = {
-  textAlign: "center",
-  minHeight: "calc(100vh - 90px)",
-  color: "#fff",
-  backgroundColor: "#99a4b4",
-  display: "flex",
-  justifyContent: "center",
-  flexDirection: "column",
-  gap: 16,
-};
-
-const genreOptions = [
-  { value: "Action", label: "Action" },
-  { value: "Drama", label: "Drama" },
-  { value: "Comedy", label: "Comedy" },
-  { value: "Sci-Fi", label: "Sci-Fi" },
-];
+import { 
+  switchStyle, 
+  siderStyle, 
+  panelContainerStyle,
+  filtersSpaceStyle } from "../../../styles/siderStyles";
+import { genreOptions } from "./SiderItems";
 
 export default function AppSider({ asPanel = false }) {
   const radioFilter = useSelector((state) => state.filter.radioFilter);
@@ -44,34 +26,20 @@ export default function AppSider({ asPanel = false }) {
     dispatch(setRadioFilter(radioFilter === value ? null : value));
   };
 
-  const genre = useSelector((state) => state.filter.genre);
-  const selectedGenre = useSelector((state) => state.filter.selectedGenre);
-  const year = useSelector((state) => state.filter.year);
-  const keyword = useSelector((state) => state.filter.keyword);
-  const keywordQuery = useSelector((state) => state.filter.keywordQuery);
-  const alphabetSort = useSelector((state) => state.filter.alphabetSort);
-
-  const panelContainerStyle = {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    textAlign: "center",
-    gap: 16,
-    paddingTop: 8,
-  };
+const {
+  genre,
+  selectedGenre,
+  year,
+  keyword,
+  keywordQuery,
+  alphabetSort,
+} = useSelector((state) => state.filter);
 
   const filtersContent = (
     <>
       <Space
         vertical
-        style={{
-          marginTop: 20,
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          marginBottom: 20,
-        }}
+        style={filtersSpaceStyle}
       >
         <Switch
           checkedChildren="Поиск по жанру"
@@ -123,9 +91,9 @@ export default function AppSider({ asPanel = false }) {
       </Space>
       <Space>
         <Radio.Group name="radiogroup" value={radioFilter}>
-          <Space direction="vertical">
+          <Space orientation="vertical">
             <Radio value="HighRating" onClick={() => onRadioClick("HighRating")}>
-              С рейтингом 4 и выше
+              С рейтингом 7+ и выше
             </Radio>
             <Radio value="ZeroAdult" onClick={() => onRadioClick("ZeroAdult")}>
               Для детей (до 12+)

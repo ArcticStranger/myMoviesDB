@@ -7,6 +7,9 @@ const searchSlice = createSlice({
     hasSearched: false,
   },
   reducers: {
+    setText(state, action) {
+      state.query = action.payload;
+    },
     setQuery(state, action) {
       state.query = action.payload;
       state.hasSearched = true;
@@ -15,8 +18,11 @@ const searchSlice = createSlice({
       state.query = "";
       state.hasSearched = false;
     },
+    checkQuery(state) {
+      state.query = state.query ? state.query : "";
+    }
   },
 });
 
-export const { setQuery, clearQuery } = searchSlice.actions;
+export const { setText, setQuery, clearQuery } = searchSlice.actions;
 export default searchSlice.reducer;
