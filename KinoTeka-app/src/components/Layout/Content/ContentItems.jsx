@@ -1,6 +1,6 @@
 import { Spin, Typography, Button } from "antd";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../../../styles/posterStyle.css";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { textStyle, filmCard, starStyle } from "../../../styles/contentStyles";
@@ -9,14 +9,10 @@ import {
   toggleFavoriteFilm,
 } from "../../../services/localStorage";
 
-import { useDispatch, useSelector } from "react-redux";
-
 function FavoriteStarButton({ movie, ariaLabel }) {
   const [isFavorite, setIsFavorite] = useState(() =>
     isFavoriteFilm(movie?.imdbID)
   );
-  const dispatch = useDispatch();
-  const selector = useSelector((state) => state.button.value);
 
   const handleFavoriteClick = () => {
     if (!movie?.imdbID) return;
@@ -41,31 +37,23 @@ function FavoriteStarButton({ movie, ariaLabel }) {
 }
 
 export function FilmItem({ check }) {
-  const navigate = useNavigate();
   return !check ? (
     <Spin />
   ) : (
-    <div
-      style={{
-        marginTop: 24,
-        marginLeft: 24,
-      }}
-    >
-      <div style={filmCard}>
-        <Link to={`/movie/${check.imdbID}`} style={{ textDecoration: "none" }}>
-          <img src={check.Poster} alt={check.Title} className="posterStyle" />
-        </Link>
-        <Typography.Text style={textStyle}>
-          Название: {check.Title}
-          <br />
-          Год выпуска: {check.Year}
-          <br />
-          Жанр: {check.Genre}
-          <br />
-          Добавить в избранное
-          <FavoriteStarButton movie={check} ariaLabel="toggle-favorite" />
-        </Typography.Text>
-      </div>
+    <div style={filmCard} className="movie-card">
+      <Link to={`/movie/${check.imdbID}`} style={{ textDecoration: "none" }}>
+        <img src={check.Poster} alt={check.Title} className="posterStyle" />
+      </Link>
+      <Typography.Text style={textStyle} className="movie-card__text">
+        Название: {check.Title}
+        <br />
+        Год выпуска: {check.Year}
+        <br />
+        Жанр: {check.Genre}
+        <br />
+        Добавить в избранное
+        <FavoriteStarButton movie={check} ariaLabel="toggle-favorite" />
+      </Typography.Text>
     </div>
   );
 }
@@ -80,22 +68,26 @@ export function FilmItemList({ searchData }) {
   }
 
   return searchData.Search.map((movie) => {
-    const { Title, Year, Type, Poster, imdbID } = movie;
+    const { Title, Year, Genre, Poster, imdbID } = movie;
 
-    // console.log(Title, Year, Type, Poster);
     return (
-      <div style={filmCard} key={imdbID}>
+      <div style={filmCard} className="movie-card" key={imdbID}>
         <Link to={`/movie/${imdbID}`} style={{ textDecoration: "none" }}>
-          <img src={Poster} className="posterStyle" />
+          <img src={Poster} alt={Title} className="posterStyle" />
         </Link>
-        <Typography.Text style={textStyle}>
+        <Typography.Text style={textStyle} className="movie-card__text">
           Название: {Title}
           <br />
           Год выпуска: {Year}
           <br />
+          Жанр: {Genre || "N/A"}
           <br />
+          Добавить в избранное
+          <FavoriteStarButton
+            movie={movie}
+            ariaLabel="toggle-favorite-search"
+          />
         </Typography.Text>
-        <FavoriteStarButton movie={movie} ariaLabel="toggle-favorite-search" />
       </div>
     );
   });
