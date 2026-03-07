@@ -1,6 +1,6 @@
 import { Input } from "antd";
 const { Search } = Input;
-import useSearch from "../../../hooks/useSearch.jsx"
+import useSearch from "../../../hooks/useSearch.jsx";
 
 export default function SearchInput() {
   const search = useSearch();

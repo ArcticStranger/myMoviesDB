@@ -20,10 +20,9 @@ export function useGetFilmInfoBySearch(filmName) {
     } else {
       async function loadSearchWithDetails() {
         try {
-          const searchResponse = await fetch(
-            makeOmdbUrl({ s: filmName }),
-            { signal: abortController.signal }
-          );
+          const searchResponse = await fetch(makeOmdbUrl({ s: filmName }), {
+            signal: abortController.signal,
+          });
           const searchData = await searchResponse.json();
 
           if (!Array.isArray(searchData?.Search)) {
@@ -31,15 +30,17 @@ export function useGetFilmInfoBySearch(filmName) {
           } else {
             const detailedResults = await Promise.allSettled(
               searchData.Search.map((movie) =>
-                fetch(
-                  makeOmdbUrl({ i: movie.imdbID }),
-                  { signal: abortController.signal }
-                ).then((value) => value.json())
+                fetch(makeOmdbUrl({ i: movie.imdbID }), {
+                  signal: abortController.signal,
+                }).then((value) => value.json())
               )
             );
 
             const detailedSearch = detailedResults.map((result, index) => {
-              if (result.status === "fulfilled" && result.value?.Response !== "False") {
+              if (
+                result.status === "fulfilled" &&
+                result.value?.Response !== "False"
+              ) {
                 return result.value;
               }
               return searchData.Search[index];
@@ -72,9 +73,7 @@ export function useGetFilmInfoDefaults(filmNames = []) {
     }
     Promise.allSettled(
       filmNames.map((filmName) =>
-        fetch(
-          makeOmdbUrl({ t: filmName })
-        ).then((value) => value.json())
+        fetch(makeOmdbUrl({ t: filmName })).then((value) => value.json())
       )
     ).then((results) => {
       const movies = results
@@ -94,9 +93,7 @@ export function useGetFilmInfoById(imdbID) {
       setData(null);
       return;
     }
-    fetch(
-   makeOmdbUrl({ i: imdbID, plot: "full" })
-    )
+    fetch(makeOmdbUrl({ i: imdbID, plot: "full" }))
       .then((value) => value.json())
       .then((value) => setData(value));
   }, [imdbID]);

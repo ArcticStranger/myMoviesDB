@@ -20,7 +20,7 @@ const searchSlice = createSlice({
     },
     checkQuery(state) {
       state.query = state.query ? state.query : "";
-    }
+    },
   },
 });
 

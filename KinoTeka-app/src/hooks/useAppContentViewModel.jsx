@@ -23,7 +23,10 @@ function sortAndFilterMovies(movies, reduxData) {
   });
 }
 
-export default function useAppContentViewModel({ database, forceFavorites = false }) {
+export default function useAppContentViewModel({
+  database,
+  forceFavorites = false,
+}) {
   const reduxData = useSelector(selectAppContentState);
   const favoriteData = getFavoriteFilms();
   const showFavorites = forceFavorites || reduxData.buttonTriggered;

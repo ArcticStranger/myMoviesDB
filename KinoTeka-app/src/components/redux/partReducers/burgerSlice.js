@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
 
 const burgerSlice = createSlice({
   name: "burger",
@@ -12,8 +12,8 @@ const burgerSlice = createSlice({
     },
     setBurgerOpen(state) {
       state.isBurgerOpen = state.isBurgerOpen ? false : true;
-    }
-  }
+    },
+  },
 });
 
 export const { setBurgerMode, setBurgerOpen } = burgerSlice.actions;

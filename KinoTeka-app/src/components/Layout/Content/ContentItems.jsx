@@ -101,10 +101,7 @@ export function FilmItemList({ searchData }) {
           <br />
           <br />
         </Typography.Text>
-        <FavoriteStarButton
-          movie={movie}
-          ariaLabel="toggle-favorite-search"
-        />
+        <FavoriteStarButton movie={movie} ariaLabel="toggle-favorite-search" />
       </div>
     );
   });

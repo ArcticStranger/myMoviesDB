@@ -11,11 +11,12 @@ import {
 } from "../../redux/partReducers/filterSlice";
 
 import { Layout, Space, Switch, Select, Input, Radio } from "antd";
-import { 
-  switchStyle, 
-  siderStyle, 
+import {
+  switchStyle,
+  siderStyle,
   panelContainerStyle,
-  filtersSpaceStyle } from "../../../styles/siderStyles";
+  filtersSpaceStyle,
+} from "../../../styles/siderStyles";
 import { genreOptions } from "./SiderItems";
 
 export default function AppSider({ asPanel = false }) {
@@ -26,21 +27,12 @@ export default function AppSider({ asPanel = false }) {
     dispatch(setRadioFilter(radioFilter === value ? null : value));
   };
 
-const {
-  genre,
-  selectedGenre,
-  year,
-  keyword,
-  keywordQuery,
-  alphabetSort,
-} = useSelector((state) => state.filter);
+  const { genre, selectedGenre, year, keyword, keywordQuery, alphabetSort } =
+    useSelector((state) => state.filter);
 
   const filtersContent = (
     <>
-      <Space
-        vertical
-        style={filtersSpaceStyle}
-      >
+      <Space vertical style={filtersSpaceStyle}>
         <Switch
           checkedChildren="Поиск по жанру"
           unCheckedChildren="Поиск по жанру"
@@ -92,13 +84,19 @@ const {
       <Space>
         <Radio.Group name="radiogroup" value={radioFilter}>
           <Space orientation="vertical">
-            <Radio value="HighRating" onClick={() => onRadioClick("HighRating")}>
+            <Radio
+              value="HighRating"
+              onClick={() => onRadioClick("HighRating")}
+            >
               С рейтингом 7+ и выше
             </Radio>
             <Radio value="ZeroAdult" onClick={() => onRadioClick("ZeroAdult")}>
               Для детей (до 12+)
             </Radio>
-            <Radio value="RussianLang" onClick={() => onRadioClick("RussianLang")}>
+            <Radio
+              value="RussianLang"
+              onClick={() => onRadioClick("RussianLang")}
+            >
               Есть русский язык
             </Radio>
           </Space>
@@ -111,5 +109,9 @@ const {
     return <div style={panelContainerStyle}>{filtersContent}</div>;
   }
 
-  return <Layout.Sider width="25%" style={siderStyle}>{filtersContent}</Layout.Sider>;
+  return (
+    <Layout.Sider width="25%" style={siderStyle}>
+      {filtersContent}
+    </Layout.Sider>
+  );
 }

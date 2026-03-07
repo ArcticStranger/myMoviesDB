@@ -8,7 +8,6 @@ export default function useSearch() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const onSearch = () => {
     const next = text.trim();
     if (!next) return;
@@ -18,6 +17,8 @@ export default function useSearch() {
   };
 
   return {
-    text, onChange: (e) => setText(e.target.value), onSearch
+    text,
+    onChange: (e) => setText(e.target.value),
+    onSearch,
   };
 }

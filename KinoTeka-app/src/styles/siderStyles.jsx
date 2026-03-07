@@ -16,14 +16,14 @@ export const siderStyle = {
 };
 
 export const panelContainerStyle = {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    textAlign: "center",
-    gap: 16,
-    paddingTop: 8,
-  };
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  textAlign: "center",
+  gap: 16,
+  paddingTop: 8,
+};
 
 export const filtersSpaceStyle = {
   marginTop: 20,
@@ -31,4 +31,4 @@ export const filtersSpaceStyle = {
   display: "flex",
   alignItems: "center",
   marginBottom: 20,
-}
+};

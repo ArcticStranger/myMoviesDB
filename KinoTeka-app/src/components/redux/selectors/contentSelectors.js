@@ -9,7 +9,9 @@ export const selectAppContentState = createSelector(
   (search, filter, button) => {
     const searchQuery = search?.query ?? "";
     const selectedGenre = filter?.selectedGenre;
-    const keyword = String(filter?.keywordQuery ?? "").trim().toLowerCase();
+    const keyword = String(filter?.keywordQuery ?? "")
+      .trim()
+      .toLowerCase();
 
     return {
       searchQuery,
