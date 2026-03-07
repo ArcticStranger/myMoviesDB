@@ -14,17 +14,8 @@ export default function sortingData({ year, alphabet, database, keyword }) {
     return titleA.localeCompare(titleB, "en", { sensitivity: "base" });
   };
 
-  const combinedSort = (a, b) => {
-    if (year) {
-      const y = byYear(a, b);
-      if (y !== 0) return y;
-    }
-    if (alphabet) {
-      const t = byTitleAsc(a, b);
-      if (t !== 0) return t;
-    }
-    return 0;
-  };
+  const combinedSort = (a, b) =>
+    (year ? byYear(a, b) : 0) || (alphabet ? byTitleAsc(a, b) : 0);
 
   const keywordValue = String(keyword ?? "").toLowerCase();
   const matchesKeyword = (movie) => {

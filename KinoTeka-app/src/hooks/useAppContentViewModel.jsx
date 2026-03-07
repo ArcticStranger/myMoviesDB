@@ -31,7 +31,9 @@ export default function useAppContentViewModel({
   const favoriteData = getFavoriteFilms();
   const showFavorites = forceFavorites || reduxData.buttonTriggered;
   const searchDataRaw = useGetFilmInfoBySearch(reduxData.searchQuery);
-  let viewModel;
+
+  let mode = null;
+  let payload = {};
 
   if (showFavorites) {
     const sortedFavorites = sortAndFilterMovies(favoriteData, reduxData);
@@ -42,15 +44,19 @@ export default function useAppContentViewModel({
           )
         : sortedFavorites;
 
-    viewModel = {
-      mode: "favorites",
-      favoritesMovies,
-    };
-  } else if (!database) {
-    viewModel = { mode: "loading" };
-  } else if (!database.length) {
-    viewModel = { mode: "loadError" };
-  } else {
+    mode = "favorites";
+    payload = { favoritesMovies };
+  }
+
+  if (mode === null && !database) {
+    mode = "loading";
+  }
+
+  if (mode === null && !database.length) {
+    mode = "loadError";
+  }
+
+  if (mode === null) {
     const movies = sortAndFilterMovies(database, reduxData);
     const sortedSearch = searchDataRaw?.Search
       ? sortAndFilterMovies(searchDataRaw.Search, reduxData)
@@ -60,8 +66,8 @@ export default function useAppContentViewModel({
       ? { ...searchDataRaw, Search: sortedSearch }
       : searchDataRaw;
 
-    viewModel = {
-      mode: "catalog",
+    mode = "catalog";
+    payload = {
       movies,
       searchData,
       shouldShowSearchResults:
@@ -69,5 +75,5 @@ export default function useAppContentViewModel({
     };
   }
 
-  return viewModel;
+  return { mode, ...payload };
 }

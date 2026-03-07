@@ -32,3 +32,8 @@ export const filmsGrid = {
   gridTemplateColumns: "repeat(4, 1fr)",
   gap: "16px",
 };
+
+export const starStyle = {
+  fontSize: 25,
+  color: "#ff0000",
+};
