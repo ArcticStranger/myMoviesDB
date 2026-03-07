@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Запускаем форматирование перед пушем
+echo "🎨 Running code Тимофея formatting..."
+
+# Автоматически форматируем код
+npm run format
+
+echo "✅ Code formatted automatically!"

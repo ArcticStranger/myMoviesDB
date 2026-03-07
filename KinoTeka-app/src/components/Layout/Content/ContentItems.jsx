@@ -1,94 +1,45 @@
-import { Spin, Typography, Button } from "antd";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import "../../../styles/posterStyle.css";
-import { StarOutlined, StarFilled } from "@ant-design/icons";
-import { textStyle, filmCard, starStyle } from "../../../styles/contentStyles";
-import {
-  isFavoriteFilm,
-  toggleFavoriteFilm,
-} from "../../../services/localStorage";
-
-function FavoriteStarButton({ movie, ariaLabel }) {
-  const [isFavorite, setIsFavorite] = useState(() =>
-    isFavoriteFilm(movie?.imdbID)
-  );
-
-  const handleFavoriteClick = () => {
-    if (!movie?.imdbID) return;
-    const next = toggleFavoriteFilm(movie);
-    setIsFavorite(next);
-  };
-
-  return (
-    <Button
-      type="text"
-      aria-label={ariaLabel}
-      onClick={handleFavoriteClick}
-      icon={
-        isFavorite ? (
-          <StarFilled style={starStyle} />
-        ) : (
-          <StarOutlined style={starStyle} />
-        )
-      }
-    />
-  );
-}
+import { Spin } from "antd";
+import MovieCard from "./MovieCard";
+import SearchLoadingState from "./states/SearchLoadingState";
+import SearchEmptyState from "./states/SearchEmptyState";
+import SearchResultsState from "./states/SearchResultsState";
 
 export function FilmItem({ check }) {
-  return !check ? (
-    <Spin />
-  ) : (
-    <div style={filmCard} className="movie-card">
-      <Link to={`/movie/${check.imdbID}`} style={{ textDecoration: "none" }}>
-        <img src={check.Poster} alt={check.Title} className="posterStyle" />
-      </Link>
-      <Typography.Text style={textStyle} className="movie-card__text">
-        Название: {check.Title}
-        <br />
-        Год выпуска: {check.Year}
-        <br />
-        Жанр: {check.Genre}
-        <br />
-        Добавить в избранное
-        <FavoriteStarButton movie={check} ariaLabel="toggle-favorite" />
-      </Typography.Text>
-    </div>
-  );
-}
-
-export function FilmItemList({ searchData }) {
-  if (!searchData) {
+  if (!check) {
     return <Spin />;
   }
 
-  if (!searchData.Search) {
-    return <Typography.Text>Фильмы не найдены</Typography.Text>;
-  }
+  return <MovieCard movie={check} ariaLabelPrefix="toggle-favorite" />;
+}
 
-  return searchData.Search.map((movie) => {
-    const { Title, Year, Genre, Poster, imdbID } = movie;
+// Хэш-мапа компонентов для состояний поиска
+const SEARCH_STATE_COMPONENTS = {
+  loading: SearchLoadingState,
+  empty: SearchEmptyState,
+  results: SearchResultsState,
+};
 
-    return (
-      <div style={filmCard} className="movie-card" key={imdbID}>
-        <Link to={`/movie/${imdbID}`} style={{ textDecoration: "none" }}>
-          <img src={Poster} alt={Title} className="posterStyle" />
-        </Link>
-        <Typography.Text style={textStyle} className="movie-card__text">
-          Название: {Title}
-          <br />
-          Год выпуска: {Year}
-          <br />
-          Жанр: {Genre || "N/A"}
-          <br />
-          Добавить в избранное
-          <FavoriteStarButton
-            movie={movie}
-            ariaLabel="toggle-favorite-search"
-          />
-        </Typography.Text>
-      </div>
-    );
-  });
+// Правила определения состояния поиска
+const SEARCH_STATE_RULES = {
+  loading: (searchData) => !searchData,
+  empty: (searchData) => !searchData.Search,
+  results: () => true, // fallback
+};
+
+export function FilmItemList({ searchData }) {
+  // Определяем компонент через правила
+  const stateKey = Object.keys(SEARCH_STATE_RULES).find((key) =>
+    SEARCH_STATE_RULES[key](searchData)
+  );
+
+  const StateComponent = SEARCH_STATE_COMPONENTS[stateKey];
+
+  // Пропсы для каждого состояния
+  const stateProps = {
+    loading: {},
+    empty: {},
+    results: { searchData },
+  };
+
+  return <StateComponent {...stateProps[stateKey]} />;
 }

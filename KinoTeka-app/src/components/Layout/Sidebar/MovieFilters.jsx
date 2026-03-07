@@ -19,7 +19,7 @@ import {
 } from "../../../styles/siderStyles";
 import { genreOptions } from "./SiderItems";
 
-export default function AppSider({ asPanel = false }) {
+export default function MovieFilters({ asPanel = false }) {
   const radioFilter = useSelector((state) => state.filter.radioFilter);
   const dispatch = useDispatch();
 

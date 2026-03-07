@@ -5,75 +5,93 @@ import sortingData from "../utils/sortingData";
 import { applyRadioFilter } from "../utils/movieFilters";
 import { selectAppContentState } from "../components/redux/selectors/contentSelectors";
 
-function filterByGenre(movies, genreActive, selectedGenre) {
+// Вспомогательные функции
+const filterMoviesByGenre = (movies, isGenreActive, selectedGenre) => {
   if (!Array.isArray(movies)) return [];
-  if (!genreActive) return movies;
+  if (!isGenreActive) return movies;
   return movies.filter((movie) => movie.Genre?.includes(selectedGenre));
-}
+};
 
-function sortAndFilterMovies(movies, reduxData) {
+const applyFiltersAndSorting = (movies, filters) => {
   return sortingData({
-    year: reduxData.year,
-    alphabet: reduxData.alphabetSort,
+    year: filters.year,
+    alphabet: filters.alphabetSort,
     database: applyRadioFilter(
-      filterByGenre(movies, reduxData.genreActive, reduxData.selectedGenre),
-      reduxData.radioFilter
+      filterMoviesByGenre(movies, filters.genreActive, filters.selectedGenre),
+      filters.radioFilter
     ),
-    keyword: reduxData.keywordForFilter,
+    keyword: filters.keywordForFilter,
   });
-}
+};
+
+const filterMoviesBySearch = (movies, searchQuery) => {
+  if (!searchQuery) return movies;
+  return movies.filter((movie) =>
+    movie?.Title?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+};
+
+// Основные функции обработки данных
+const processFavoritesData = (favorites, filters, searchQuery) => {
+  const filteredFavorites = applyFiltersAndSorting(favorites, filters);
+  const searchedFavorites = filterMoviesBySearch(
+    filteredFavorites,
+    searchQuery
+  );
+
+  return {
+    contentType: "favorites",
+    movies: searchedFavorites,
+  };
+};
+
+const processCatalogData = (database, filters, searchQuery, searchResults) => {
+  const filteredDatabase = applyFiltersAndSorting(database, filters);
+
+  const processedSearchResults = searchResults?.Search
+    ? applyFiltersAndSorting(searchResults.Search, filters)
+    : searchResults?.Search;
+
+  const finalSearchResults = searchResults
+    ? { ...searchResults, Search: processedSearchResults }
+    : searchResults;
+
+  return {
+    contentType: "catalog",
+    movies: filteredDatabase,
+    searchResults: finalSearchResults,
+    showSearchResults: Boolean(searchQuery),
+  };
+};
 
 export default function useAppContentViewModel({
   database,
   forceFavorites = false,
 }) {
-  const reduxData = useSelector(selectAppContentState);
-  const favoriteData = getFavoriteFilms();
-  const showFavorites = forceFavorites || reduxData.buttonTriggered;
-  const searchDataRaw = useGetFilmInfoBySearch(reduxData.searchQuery);
+  const filters = useSelector(selectAppContentState);
+  const favorites = getFavoriteFilms();
+  const showFavorites = forceFavorites || filters.buttonTriggered;
+  const searchResults = useGetFilmInfoBySearch(filters.searchQuery);
 
-  let mode = null;
-  let payload = {};
-
+  // Определяем режим отображения
   if (showFavorites) {
-    const sortedFavorites = sortAndFilterMovies(favoriteData, reduxData);
-    const favoritesMovies =
-      reduxData.hasSearched && reduxData.normalizedQuery
-        ? sortedFavorites.filter((movie) =>
-            movie?.Title?.toLowerCase().includes(reduxData.normalizedQuery)
-          )
-        : sortedFavorites;
-
-    mode = "favorites";
-    payload = { favoritesMovies };
+    return processFavoritesData(favorites, filters, filters.normalizedQuery);
   }
 
-  if (mode === null && !database) {
-    mode = "loading";
+  // Обработка ошибок загрузки
+  if (!database) {
+    return { contentType: "loading" };
   }
 
-  if (mode === null && !database.length) {
-    mode = "loadError";
+  if (!database.length) {
+    return { contentType: "loadError" };
   }
 
-  if (mode === null) {
-    const movies = sortAndFilterMovies(database, reduxData);
-    const sortedSearch = searchDataRaw?.Search
-      ? sortAndFilterMovies(searchDataRaw.Search, reduxData)
-      : searchDataRaw?.Search;
-
-    const searchData = searchDataRaw
-      ? { ...searchDataRaw, Search: sortedSearch }
-      : searchDataRaw;
-
-    mode = "catalog";
-    payload = {
-      movies,
-      searchData,
-      shouldShowSearchResults:
-        reduxData.hasSearched && Boolean(reduxData.searchQuery),
-    };
-  }
-
-  return { mode, ...payload };
+  // Основной режим - каталог
+  return processCatalogData(
+    database,
+    filters,
+    filters.normalizedQuery,
+    searchResults
+  );
 }

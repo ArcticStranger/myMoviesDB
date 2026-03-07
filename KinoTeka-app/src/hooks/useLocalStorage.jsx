@@ -1,22 +1,28 @@
 import { useState } from "react";
 import { getFavoriteFilm, setFavoriteFilm } from "../services/localStorage";
 
-export default function useLocalStorage() {
-  const [storage, setStorage] = useState(null);
+export default function useLocalStorage(key) {
+  // Lazy initial state - читаем localStorage только при первом рендере
+  const [storage, setStorage] = useState(() => getFavoriteFilm(key));
   const [isEdited, setIsEdited] = useState(false);
 
-  let check;
-
-  const onStorage = (value) => {
+  const updateStorage = (value) => {
     setStorage(value);
     setIsEdited(true);
-    check = getFavoriteFilm(value);
-    setFavoriteFilm(value);
+    setFavoriteFilm(key, value);
+  };
+
+  const clearStorage = () => {
+    setStorage(null);
+    setIsEdited(false);
+    setFavoriteFilm(key, null);
   };
 
   return {
     storage,
     isEdited,
-    check,
+    updateStorage,
+    clearStorage,
+    hasValue: storage !== null,
   };
 }

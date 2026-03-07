@@ -1,32 +1,22 @@
 import { useSelector } from "react-redux";
 
 export default function useReduxSlicer() {
-  const { query: searchQuery, hasSearched } = useSelector(
-    (state) => state.search
-  );
-  const { hasButtonTapped: buttonTriggered } = useSelector(
-    (state) => state.button
-  );
-  const {
-    keywordQuery: filter_keywordQuery,
-    keyword: filter_keyword,
-    genre: filter_genre,
-    selectedGenre: filter_selectedGenre,
-    year: filter_year,
-    alphabetSort: filter_alphabetSort,
-    radioFilter: filter_radioFilter,
-  } = useSelector((state) => state.filter);
+  const reduxState = useSelector((state) => ({
+    search: state.search,
+    button: state.button,
+    filter: state.filter,
+  }));
 
   return {
-    searchQuery,
-    hasSearched,
-    buttonTriggered,
-    filter_keyword,
-    filter_keywordQuery,
-    filter_genre,
-    filter_selectedGenre,
-    filter_year,
-    filter_alphabetSort,
-    filter_radioFilter,
+    searchQuery: reduxState.search.query,
+    hasSearched: reduxState.search.hasSearched,
+    buttonTriggered: reduxState.button.hasButtonTapped,
+    keywordQuery: reduxState.filter.keywordQuery,
+    keyword: reduxState.filter.keyword,
+    genre: reduxState.filter.genre,
+    selectedGenre: reduxState.filter.selectedGenre,
+    year: reduxState.filter.year,
+    alphabetSort: reduxState.filter.alphabetSort,
+    radioFilter: reduxState.filter.radioFilter,
   };
 }

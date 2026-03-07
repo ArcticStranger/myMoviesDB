@@ -12,13 +12,13 @@ import { setButton } from "../../redux/partReducers/buttonSlice";
 
 export default function AppHeader({
   isBurgerMode,
-  onSetSiderMode,
+  onToggleBurgerMode,
   onOpenBurger,
-  canUseSider,
+  showBurgerControls,
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const canOpenBurger = canUseSider && isBurgerMode;
+  const canOpenBurger = showBurgerControls && isBurgerMode;
 
   return (
     <Layout.Header
@@ -41,13 +41,13 @@ export default function AppHeader({
           alignItems: "center",
           gap: 8,
           marginRight: 12,
-          opacity: canUseSider ? 1 : 0.7,
+          opacity: showBurgerControls ? 1 : 0.7,
         }}
       >
         <Switch
           checked={isBurgerMode}
-          onChange={(checked) => onSetSiderMode(checked)}
-          disabled={!canUseSider}
+          onChange={(checked) => onToggleBurgerMode(checked)}
+          disabled={!showBurgerControls}
         />
         <span style={{ color: "#fff", whiteSpace: "nowrap", fontSize: 14 }}>
           {isBurgerMode ? "Бургер-режим вкл." : "Бургер-режим откл."}
