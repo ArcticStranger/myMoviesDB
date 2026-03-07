@@ -1,26 +1,7 @@
 import { Layout } from "antd";
 import { GithubOutlined, WindowsFilled } from "@ant-design/icons";
 
-const footerStyle = {
-  display: "flex",
-  textAlign: "start",
-  fontSize: "20px",
-  color: "#fff",
-  backgroundColor: "#000000",
-  position: "fixed",
-  left: 0,
-  right: 0,
-  bottom: 0,
-  width: "100%",
-  zIndex: 1000,
-};
-
-const hrefStyle = {
-  color: "#fff",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
+import { hrefStyle, footerStyle } from "./FooterItems";
 
 export default function AppFooter() {
   return (
