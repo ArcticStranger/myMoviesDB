@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Запускаем линтинг и форматирование перед коммитом
+echo "🔍 Running linting and formatting checks..."
+
+# Проверяем и исправляем ESLint ошибки
+npm run lint:fix
+lint_status=$?
+
+if [ $lint_status -ne 0 ]; then
+  echo "❌ ESLint found errors that couldn't be fixed automatically"
+  exit 1
+fi
+
+# Проверяем форматирование Prettier
+npm run format:check
+format_status=$?
+
+if [ $format_status -ne 0 ]; then
+  echo "❌ Code formatting issues found. Run 'npm run format' to fix them."
+  exit 1
+fi
+
+echo "✅ All checks passed! Ready to commit."
