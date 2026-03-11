@@ -4,7 +4,7 @@ import { StarOutlined, StarFilled } from "@ant-design/icons";
 import { starStyle } from "../../../styles/contentStyles";
 import {
   isFavoriteFilm,
-  toggleFavoriteFilm,
+  toggleFavorite,
 } from "../../../services/localStorage";
 
 export default function FavoriteStarButton({ movie, ariaLabel }) {
@@ -14,8 +14,9 @@ export default function FavoriteStarButton({ movie, ariaLabel }) {
 
   const handleFavoriteClick = () => {
     if (!movie?.imdbID) return;
-    const next = toggleFavoriteFilm(movie);
-    setIsFavorite(next);
+    const result = toggleFavorite(movie);
+    if (!result?.success) return;
+    setIsFavorite(result.action === "added");
   };
 
   return (
