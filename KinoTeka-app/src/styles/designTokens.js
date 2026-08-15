@@ -1,63 +1,73 @@
 // ====== DESIGN SYSTEM TOKENS ======
-// Централизованная палитра и размеры для всего приложения
+// Тёмная кинематографичная палитра "premium", как у современных продуктов
 
 export const COLORS = {
-  // Основные цвета - теплая, уютная палитра
+  // Основные цвета - глубокая тёмная палитра
   primary: {
-    text: "#2c3e50", // Более мягкий темно-синий, лучше читается
+    text: "#e8eaf0",
+    textMuted: "#98a1b3",
     background: {
-      main: "#fefefe", // Чистый белый с теплым оттенком
-      secondary: "#f8f9fa", // Легкий серый для глубины
+      main: "#0a0d16",
+      secondary: "#0f1320",
     },
     accent: {
-      primary: "#e67e22", // Теплый апельсин
-      secondary: "#f39c12", // Золотистый
-      light: "rgba(230, 126, 34, 0.1)", // Легкий акцент для фона
+      primary: "#6366f1", // Индиго
+      secondary: "#8b5cf6", // Виолет
+      tertiary: "#22d3ee", // Циан
+      pink: "#ec4899",
+      light: "rgba(99, 102, 241, 0.14)", // Лёгкий акцент для фона
     },
+    gradient: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #22d3ee 100%)",
   },
-  // Карточки - минималистичные и элегантные
+  // Карточки - стеклянные, с тонкими границами
   card: {
     background:
-      "linear-gradient(145deg, #ffffff 0%, #fafbfc 50%, #f5f6f8 100%)",
-    border: "rgba(52, 73, 94, 0.08)",
+      "linear-gradient(160deg, rgba(255, 255, 255, 0.055) 0%, rgba(255, 255, 255, 0.018) 100%)",
+    solid: "#12161f",
+    border: "rgba(255, 255, 255, 0.09)",
+    borderHover: "rgba(99, 102, 241, 0.45)",
     shadow: {
-      primary: "rgba(52, 73, 94, 0.1)",
-      secondary: "rgba(52, 73, 94, 0.05)",
+      primary: "rgba(0, 0, 0, 0.45)",
+      secondary: "rgba(0, 0, 0, 0.25)",
     },
     hover: {
       background:
-        "linear-gradient(145deg, #ffffff 0%, #f8f9fa 50%, #f1f3f4 100%)",
-      border: "rgba(52, 73, 94, 0.12)",
-      shadow: "rgba(52, 73, 94, 0.15)",
+        "linear-gradient(160deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.025) 100%)",
+      border: "rgba(99, 102, 241, 0.55)",
+      shadow: "rgba(99, 102, 241, 0.18)",
     },
   },
   // Рейтинги и интерактивные элементы
   rating: {
-    active: "#f39c12", // Золотистый для звезд
-    inactive: "rgba(189, 195, 199, 0.3)", // Нейтральный для неактивных
+    active: "#fbbf24",
+    background: "rgba(20, 24, 35, 0.72)",
+    inactive: "rgba(148, 155, 175, 0.35)",
+    good: "#34d399",
+    mid: "#fbbf24",
+    low: "#f87171",
   },
   // Дополнительные семантические цвета
   semantic: {
-    success: "#27ae60",
-    warning: "#f39c12",
-    error: "#e74c3c",
-    info: "#3498db",
+    success: "#34d399",
+    warning: "#fbbf24",
+    error: "#f87171",
+    info: "#38bdf8",
   },
   // Нейтральные цвета
   neutral: {
     white: "#ffffff",
     black: "#000000",
     gray: {
-      50: "#f8f9fa",
-      100: "#e9ecef",
-      200: "#dee2e6",
-      300: "#ced4da",
-      400: "#adb5bd",
-      500: "#6c757d",
-      600: "#495057",
-      700: "#343a40",
-      800: "#212529",
-      900: "#2c3e50",
+      50: "#0f1320",
+      100: "#171c2b",
+      200: "#222a3d",
+      300: "#303950",
+      400: "#4b5569",
+      500: "#6b7280",
+      600: "#98a1b3",
+      700: "#b9bfcd",
+      800: "#d7dae3",
+      900: "#e8eaf0",
     },
   },
 };
@@ -65,14 +75,14 @@ export const COLORS = {
 export const SIZES = {
   // Карточки
   card: {
-    minHeight: 620,
-    borderRadius: 22,
+    minHeight: 590,
+    borderRadius: 16,
     gap: 6,
   },
   // Сетка
   grid: {
-    gap: 22,
-    minColumnWidth: 280,
+    gap: 24,
+    minColumnWidth: 272,
   },
   // Отступы - семантическая шкала
   spacing: {
@@ -82,23 +92,23 @@ export const SIZES = {
     lg: 18,
     xl: 22,
     xxl: 28,
-    xxxl: 110,
+    xxxl: 96,
   },
   // Текст
   text: {
     fontSize: 16,
     lineHeight: 1.55,
-    starSize: 25,
+    starSize: 22,
   },
   // Тени
   shadow: {
-    primary: "0 12px 34px",
-    secondary: "0 2px 8px",
+    primary: "0 18px 44px",
+    secondary: "0 4px 12px",
   },
   // Анимации
   transition: {
-    duration: 0.24,
-    properties: "transform, box-shadow, border-color",
+    duration: 0.22,
+    properties: "transform, box-shadow, border-color, background",
   },
   // Скругления
   radius: {
@@ -147,9 +157,18 @@ export const FONTS = {
 // Получить цвет из нейтральной палитры
 export const getGray = (shade) => COLORS.neutral.gray[shade];
 
+// Рейтинг в цвет для бейджа
+export const ratingColor = (value) => {
+  const rating = Number.parseFloat(value);
+  if (Number.isNaN(rating)) return "#94a3b3";
+  if (rating >= 7.5) return COLORS.rating.good;
+  if (rating >= 6) return COLORS.rating.mid;
+  return COLORS.rating.low;
+};
+
 // Создать тень с кастомным цветом
 export const createShadow = (color, opacity = 0.1) =>
-  `0 12px 34px ${color}${Math.round(opacity * 255)
+  `0 18px 44px ${color}${Math.round(opacity * 255)
     .toString(16)
     .padStart(2, "0")}`;
 

@@ -1,36 +1,39 @@
 export const descriptionStyles = {
   display: "flex",
-  gap: "40px",
-  marginTop: "100px",
+  gap: 48,
+  marginTop: 40,
+  padding: "8px 12px",
 };
 
 export const descPosterStyle = {
-  width: "640px",
-  margin: "0px 40px",
-  transition: "transform 0.2s ease, boxShadow 0.2s ease",
-  boxShadow: "none",
-  cursor: "pointer",
-  transform: "scale(1)",
+  borderRadius: 18,
 };
 
 export const plotTitleStyle = {
-  fontSize: 24,
-  fontWeight: 800,
+  fontSize: 15,
+  fontWeight: 600,
+  letterSpacing: "0.04em",
+  textTransform: "uppercase",
+  color: "#6b7280",
+  marginBottom: 10,
 };
 
 export const plotTextStyle = {
-  fontSize: 18,
-  fontWeight: 500,
-  border: "4px solid #c2c02a",
-  borderRadius: 10,
-  background: "#ded7d7",
-  maxWidth: 600,
-  padding: 20,
-  textAlign: "inherit",
+  fontSize: 17,
+  fontWeight: 400,
 };
 
 export const backLinkStyle = {
-  marginTop: 16,
-  marginLeft: 40,
-  fontSize: 25,
+  marginTop: 20,
+  marginLeft: 12,
+  fontSize: 16,
+};
+
+export const backLinkColor = {
+  color: "#98a1b3",
+  textDecoration: "none",
+};
+
+export const backLinkHover = {
+  color: "#fff",
 };

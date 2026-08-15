@@ -1,16 +1,18 @@
 import { Input } from "antd";
-const { Search } = Input;
 import useSearch from "../../../hooks/useSearch.jsx";
+
+const { Search } = Input;
 
 export default function SearchInput() {
   const search = useSearch();
+
   return (
     <Search
-      placeholder="Введите название фильма"
-      style={{ maxWidth: "30vh", marginRight: "3rem" }}
-      value={search.text}
-      onChange={search.onChange}
-      onSearch={search.onSearch}
+      placeholder="Поиск фильмов, сериалов..."
+      className="app-search"
+      value={search.searchInput}
+      onChange={(e) => search.setSearchInput(e.target.value)}
+      onSearch={() => search.handleSearch()}
       size="large"
       allowClear
     />

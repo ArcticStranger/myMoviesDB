@@ -1,19 +1,10 @@
 export const footerStyle = {
-  display: "flex",
-  textAlign: "start",
-  fontSize: "20px",
-  color: "#fff",
-  backgroundColor: "#000000",
-  position: "fixed",
-  left: 0,
-  right: 0,
-  bottom: 0,
-  width: "100%",
-  zIndex: 1000,
+  padding: "0 32px",
+  height: 56,
 };
 
 export const hrefStyle = {
-  color: "#fff",
+  color: "#98a1b3",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

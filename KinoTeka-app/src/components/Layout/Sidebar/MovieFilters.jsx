@@ -15,27 +15,27 @@ import {
   switchStyle,
   siderStyle,
   panelContainerStyle,
+  panelHeaderStyle,
+  filtersSectionStyle,
+  sectionTitleStyle,
   filtersSpaceStyle,
 } from "../../../styles/siderStyles";
 import { genreOptions } from "./SiderItems";
 
-export default function MovieFilters({ asPanel = false }) {
-  const radioFilter = useSelector((state) => state.filter.radioFilter);
-  const dispatch = useDispatch();
-
+function FiltersContent({ dispatch, state }) {
+  const { genre, selectedGenre, year, keyword, keywordQuery, alphabetSort } =
+    state;
   const onRadioClick = (value) => {
-    dispatch(setRadioFilter(radioFilter === value ? null : value));
+    dispatch(setRadioFilter(state.radioFilter === value ? null : value));
   };
 
-  const { genre, selectedGenre, year, keyword, keywordQuery, alphabetSort } =
-    useSelector((state) => state.filter);
-
-  const filtersContent = (
+  return (
     <>
-      <Space vertical style={filtersSpaceStyle}>
+      <Space style={filtersSpaceStyle}>
+        <span style={sectionTitleStyle}>Жанр</span>
         <Switch
-          checkedChildren="Поиск по жанру"
-          unCheckedChildren="Поиск по жанру"
+          checkedChildren="Жанр вкл."
+          unCheckedChildren="Жанр выкл."
           checked={genre}
           onChange={(checked) => dispatch(setGenre(checked))}
           style={switchStyle}
@@ -46,20 +46,35 @@ export default function MovieFilters({ asPanel = false }) {
             onChange={(value) => dispatch(setGenreQuery(value))}
             options={genreOptions}
             placeholder="Выбрать жанр"
-            style={{ width: 240 }}
+            style={{ width: "100%" }}
             allowClear
           />
         )}
+      </Space>
+
+      <Space style={filtersSectionStyle}>
+        <span style={sectionTitleStyle}>Сортировка</span>
         <Switch
-          checkedChildren="Сортировка по годам вкл."
-          unCheckedChildren="Сортировка по годам откл."
+          checkedChildren="По году вкл."
+          unCheckedChildren="По году выкл."
           checked={year}
           onChange={(checked) => dispatch(setYear(checked))}
           style={switchStyle}
         />
         <Switch
-          checkedChildren="Поиск по ключевым словам"
-          unCheckedChildren="Поиск по ключевым словам"
+          checkedChildren="По алфавиту вкл."
+          unCheckedChildren="По алфавиту выкл."
+          checked={alphabetSort}
+          onChange={(checked) => dispatch(setAlphabetSort(checked))}
+          style={switchStyle}
+        />
+      </Space>
+
+      <Space style={filtersSectionStyle}>
+        <span style={sectionTitleStyle}>Ключевые слова</span>
+        <Switch
+          checkedChildren="Ключевые слова вкл."
+          unCheckedChildren="Ключевые слова выкл."
           checked={keyword}
           onChange={(checked) => dispatch(setKeyword(checked))}
           style={switchStyle}
@@ -69,21 +84,15 @@ export default function MovieFilters({ asPanel = false }) {
             value={keywordQuery}
             onChange={(e) => dispatch(setKeywordQuery(e.target.value))}
             placeholder="Ключевое слово"
-            style={{ width: 240 }}
             allowClear
           />
         )}
-        <Switch
-          checkedChildren="Сортировка по алфавиту вкл. (A-Z)"
-          unCheckedChildren="Сортировка по алфавиту откл."
-          checked={alphabetSort}
-          onChange={(checked) => dispatch(setAlphabetSort(checked))}
-          style={switchStyle}
-        />
       </Space>
-      <Space>
-        <Radio.Group name="radiogroup" value={radioFilter}>
-          <Space orientation="vertical">
+
+      <Space style={filtersSectionStyle}>
+        <span style={sectionTitleStyle}>Специальная подборка</span>
+        <Radio.Group name="radiogroup" value={state.radioFilter}>
+          <Space direction="vertical">
             <Radio
               value="HighRating"
               onClick={() => onRadioClick("HighRating")}
@@ -104,14 +113,24 @@ export default function MovieFilters({ asPanel = false }) {
       </Space>
     </>
   );
+}
+
+export default function MovieFilters({ asPanel = false }) {
+  const state = useSelector((state) => state.filter);
+  const dispatch = useDispatch();
 
   if (asPanel) {
-    return <div style={panelContainerStyle}>{filtersContent}</div>;
+    return (
+      <div style={panelContainerStyle}>
+        {<FiltersContent dispatch={dispatch} state={state} />}
+      </div>
+    );
   }
 
   return (
-    <Layout.Sider width="25%" style={siderStyle}>
-      {filtersContent}
+    <Layout.Sider width="300px" style={siderStyle}>
+      <div style={panelHeaderStyle}>Фильтры</div>
+      <FiltersContent dispatch={dispatch} state={state} />
     </Layout.Sider>
   );
 }

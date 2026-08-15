@@ -1,4 +1,3 @@
-import { Typography } from "antd";
 import { filmsGrid } from "../../../styles/contentStyles";
 import MovieCard from "./MovieCard";
 
@@ -7,11 +6,7 @@ export default function MoviesList({
   emptyMessage = "Фильмы не найдены",
 }) {
   if (!movies || movies.length === 0) {
-    return (
-      <div style={filmsGrid}>
-        <Typography.Text>{emptyMessage}</Typography.Text>
-      </div>
-    );
+    return <div className="movie-card__empty">{emptyMessage}</div>;
   }
 
   return (

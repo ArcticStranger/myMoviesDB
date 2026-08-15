@@ -16,7 +16,7 @@ const buttonSlice = createSlice({
       state.hasButtonTapped = false;
     },
     setDescriptionState(state) {
-      state.movieDescOpened = false ? true : false;
+      state.movieDescOpened = !state.movieDescOpened;
     },
     checkDescState(state) {
       return state.movieDescOpened;

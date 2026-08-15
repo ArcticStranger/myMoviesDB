@@ -1,7 +1,12 @@
-import { Typography } from "antd";
-
 export default function ErrorState() {
   return (
-    <Typography.Text type="danger">Не удалось загрузить фильмы</Typography.Text>
+    <div className="kt-state">
+      <div className="kt-state__title" style={{ color: "#f87171" }}>
+        Не удалось загрузить фильмы
+      </div>
+      <div className="kt-state__text">
+        Проверьте подключение к интернету или попробуйте позже.
+      </div>
+    </div>
   );
 }

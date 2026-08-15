@@ -1,13 +1,11 @@
 export const myGithubStyle = {
-  fontSize: 30,
+  fontSize: 16,
   justifyContent: "center",
-  marginLeft: 10,
-  marginRight: 40,
+  marginLeft: 2,
 };
 
 export const emailStyle = {
-  fontSize: 30,
+  fontSize: 16,
   justifyContent: "center",
-  marginLeft: 10,
-  marginRight: 50,
+  marginLeft: 2,
 };

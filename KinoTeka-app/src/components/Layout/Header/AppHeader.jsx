@@ -4,11 +4,11 @@ import { MenuOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { clearButton } from "../../redux/partReducers/buttonSlice";
 import { clearQuery } from "../../redux/partReducers/searchSlice";
+import { setButton } from "../../redux/partReducers/buttonSlice";
 
-import SearchInput from "../../common/input/SearchInput.jsx";
+import SearchInput from "../../common/Input/SearchInput.jsx";
 
 import { useDispatch } from "react-redux";
-import { setButton } from "../../redux/partReducers/buttonSlice";
 
 export default function AppHeader({
   isBurgerMode,
@@ -20,76 +20,70 @@ export default function AppHeader({
   const navigate = useNavigate();
   const canOpenBurger = showBurgerControls && isBurgerMode;
 
+  const goHome = () => {
+    dispatch(clearButton());
+    dispatch(clearQuery());
+    navigate("/main");
+  };
+
+  const goFavorites = () => {
+    dispatch(clearQuery());
+    dispatch(setButton(true));
+    navigate("/favorites");
+  };
+
   return (
-    <Layout.Header
-      style={{
-        display: "flex",
-        alignItems: "center",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        width: "100%",
-        zIndex: 1000,
-      }}
-    >
-      <div className="demo-logo" />
-      <SearchInput />
+    <Layout.Header className="app-header">
       <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          marginRight: 12,
-          opacity: showBurgerControls ? 1 : 0.7,
-        }}
+        className="app-header__brand"
+        onClick={goHome}
+        role="button"
+        aria-label="На главную"
+      >
+        <span className="app-header__brand--accent">KINO</span>
+        <span>TEKA</span>
+      </div>
+
+      <SearchInput />
+
+      <div className="app-header__divider" />
+
+      <div
+        className="app-header__burger-toggle"
+        style={{ opacity: showBurgerControls ? 1 : 0.6 }}
       >
         <Switch
           checked={isBurgerMode}
           onChange={(checked) => onToggleBurgerMode(checked)}
           disabled={!showBurgerControls}
+          size="small"
+          aria-label="Режим бургер-меню"
         />
-        <span style={{ color: "#fff", whiteSpace: "nowrap", fontSize: 14 }}>
-          {isBurgerMode ? "Бургер-режим вкл." : "Бургер-режим откл."}
+        <span className="app-header__burger-label">
+          {isBurgerMode ? "Бургер вкл." : "Бургер выкл."}
         </span>
       </div>
+
       <Button
+        className="app-header__btn"
         icon={<MenuOutlined />}
-        style={{
-          marginRight: 12,
-          background: canOpenBurger ? "#fff" : "#f2f2f2",
-          borderColor: canOpenBurger ? undefined : "#d9d9d9",
-          color: canOpenBurger ? undefined : "#777",
-          opacity: canOpenBurger ? 1 : 0.9,
-          cursor: canOpenBurger ? "pointer" : "not-allowed",
-        }}
-        onClick={() => {
-          if (canOpenBurger) onOpenBurger();
-        }}
-        aria-disabled={!canOpenBurger}
+        disabled={!canOpenBurger}
+        onClick={onOpenBurger}
       >
         Фильтры
       </Button>
+
       <Button
-        type="primary"
-        onClick={() => {
-          dispatch(clearButton());
-          dispatch(clearQuery());
-          navigate("/main");
-        }}
+        className="app-header__btn app-header__btn--primary"
+        onClick={goHome}
       >
         Главная
       </Button>
+
       <Button
-        icon={
-          <HeartTwoTone twoToneColor="#eb2f96" style={{ fontSize: "1.2rem" }} />
-        }
-        style={{ marginLeft: 30 }}
-        onClick={() => {
-          dispatch(clearQuery());
-          dispatch(setButton(true));
-          navigate("/favorites");
-        }}
+        className="app-header__btn app-header__btn--fav"
+        icon={<HeartTwoTone twoToneColor="#ec4899" />}
+        onClick={goFavorites}
       >
         Избранное
       </Button>

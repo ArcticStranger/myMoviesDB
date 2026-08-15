@@ -1,34 +1,53 @@
 export const switchStyle = {
-  transform: "scale(1.5)",
-  marginTop: 15,
-  minWidth: 250,
+  minWidth: "100%",
 };
 
 export const siderStyle = {
-  textAlign: "center",
   minHeight: "calc(100vh - 90px)",
-  color: "#fff",
-  backgroundColor: "#99a4b4",
-  display: "flex",
-  justifyContent: "center",
-  flexDirection: "column",
-  gap: 16,
+  color: "#e8eaf0",
+  backgroundColor: "rgba(18, 22, 31, 0.75)",
+  borderLeft: "1px solid rgba(255, 255, 255, 0.07)",
+  padding: "24px 20px",
+  overflowY: "auto",
 };
 
 export const panelContainerStyle = {
   width: "100%",
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
-  textAlign: "center",
-  gap: 16,
-  paddingTop: 8,
+  gap: 0,
+};
+
+export const panelHeaderStyle = {
+  fontFamily: "'Space Grotesk', sans-serif",
+  fontSize: 15,
+  fontWeight: 700,
+  letterSpacing: "0.06em",
+  textTransform: "uppercase",
+  color: "#98a1b3",
+  paddingBottom: 16,
+  borderBottom: "1px solid rgba(255, 255, 255, 0.07)",
+};
+
+export const filtersSectionStyle = {
+  display: "flex",
+  flexDirection: "column",
+  gap: 12,
+  padding: "20px 0",
+  borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
+};
+
+export const sectionTitleStyle = {
+  fontSize: 12,
+  fontWeight: 600,
+  letterSpacing: "0.05em",
+  textTransform: "uppercase",
+  color: "#6b7280",
 };
 
 export const filtersSpaceStyle = {
-  marginTop: 20,
   width: "100%",
   display: "flex",
-  alignItems: "center",
-  marginBottom: 20,
+  flexDirection: "column",
+  alignItems: "stretch",
 };

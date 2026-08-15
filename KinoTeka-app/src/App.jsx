@@ -36,7 +36,9 @@ function App() {
         onClose={() => setBurgerMenuState("close")}
         title="Фильтры"
       >
-        {burgerState !== null && shouldShowMovieFilters && <MovieFilters />}
+        {burgerState !== null && shouldShowMovieFilters && (
+          <MovieFilters asPanel />
+        )}
       </SideBar>
       <AppFooter />
     </Layout>
